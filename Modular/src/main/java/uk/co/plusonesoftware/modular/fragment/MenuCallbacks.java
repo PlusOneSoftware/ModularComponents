@@ -1,6 +1,5 @@
 package uk.co.plusonesoftware.modular.fragment;
 
-import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,26 +15,26 @@ public class MenuCallbacks {
     }
 
     public interface onCreateOptionsMenuCallback extends MenuCallback {
-        void onCreateOptionsMenu(Fragment fragment, Menu menu);
+        void onCreateOptionsMenu(Menu menu);
     }
 
     public interface onPrepareOptionsMenuCallback extends MenuCallback {
-        boolean onPrepareOptionsMenu(Fragment fragment, Menu menu);
+        boolean onPrepareOptionsMenu(Menu menu);
     }
 
     public interface onOptionsItemSelectedCallback extends MenuCallback {
-        boolean onOptionsItemSelectedActivity(Fragment fragment, MenuItem item);
+        boolean onOptionsItemSelectedActivity(MenuItem item);
     }
 
     public interface onOptionsMenuClosedCallback extends MenuCallback {
-        void onOptionsMenuClosed(Fragment fragment, Menu menu);
+        void onOptionsMenuClosed(Menu menu);
     }
 
     public interface onCreateContextMenuCallback extends MenuCallback {
-        void onCreateContextMenu(Fragment fragment, ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo);
+        void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo);
     }
 
     public interface onContextItemSelectedCallback extends MenuCallback {
-        boolean onContextItemSelected(Fragment fragment, MenuItem item);
+        boolean onContextItemSelected(MenuItem item);
     }
 }

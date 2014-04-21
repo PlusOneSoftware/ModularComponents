@@ -2,11 +2,10 @@ package uk.co.plusonesoftware.modular.fragment;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,13 +13,12 @@ import android.view.MenuItem;
 import android.view.View;
 
 import uk.co.plusonesoftware.modular.ComponentModule;
-import uk.co.plusonesoftware.modular.activity.FragmentCallbacks;
+import uk.co.plusonesoftware.modular.activity.SupportFragmentCallbacks;
 
 /**
  * Created by James on 18/04/2014.
  */
-@TargetApi(11)
-public class ModularFragment extends Fragment {
+public class ModularSupportFragment extends Fragment {
 
     private FragmentModule mModule = new FragmentModule();
 
@@ -57,15 +55,12 @@ public class ModularFragment extends Fragment {
         mModule.onCreate(savedInstanceState);
     }
 
-    @TargetApi(13)
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        if(Build.VERSION.SDK_INT >= 13) {
-            super.onViewCreated(view, savedInstanceState);
-        }
+        super.onViewCreated(view, savedInstanceState);
         mModule.onViewCreated(view, savedInstanceState);
-        if(getActivity() instanceof FragmentCallbacks.onFragmentViewCreatedCallback) {
-            FragmentCallbacks.onFragmentViewCreatedCallback cb = (FragmentCallbacks.onFragmentViewCreatedCallback) getActivity();
+        if(getActivity() instanceof SupportFragmentCallbacks.onFragmentViewCreatedCallback) {
+            SupportFragmentCallbacks.onFragmentViewCreatedCallback cb = (SupportFragmentCallbacks.onFragmentViewCreatedCallback) getActivity();
             cb.onFragmentViewCreated(this, view, savedInstanceState);
         }
     }

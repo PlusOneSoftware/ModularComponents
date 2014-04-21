@@ -1,13 +1,13 @@
 package uk.co.plusonesoftware.modular.activity;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.View;
 
 /**
  * Created by James on 18/04/2014.
  */
-public class FragmentCallbacks {
+public class SupportFragmentCallbacks {
 
     public interface FragmentCallback extends ActivityModule.ActivityCallback {
 

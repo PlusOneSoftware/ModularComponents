@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.View;
 
 /**
@@ -16,59 +15,59 @@ public class LifeCycleCallbacks {
     }
 
     public interface onActivityCreatedCallback extends LifeCycleCallback {
-        void onActivityCreated(Fragment fragment, Bundle savedInstanceState);
+        void onActivityCreated(Bundle savedInstanceState);
     }
 
     public interface onCreateCallback extends LifeCycleCallback {
-        void onCreate(Fragment fragment, Bundle savedInstanceState);
+        void onCreate(Bundle savedInstanceState);
     }
 
     public interface onViewCreatedCallback extends LifeCycleCallback {
-        void onViewCreated(Fragment fragment, View view, Bundle savedInstanceState);
+        void onViewCreated(View view, Bundle savedInstanceState);
     }
 
     public interface onStartCallback extends LifeCycleCallback {
-        void onStart(Fragment fragment);
+        void onStart();
     }
 
     public interface onResumeCallback extends LifeCycleCallback {
-        void onResume(Fragment fragment);
+        void onResume();
     }
 
     public interface onPauseCallback extends LifeCycleCallback {
-        void onPause(Fragment fragment);
+        void onPause();
     }
 
     public interface onStopCallback extends LifeCycleCallback {
-        void onStop(Fragment fragment);
+        void onStop();
     }
 
     public interface onDestroyViewCallback extends LifeCycleCallback {
-        void onDestroyView(Fragment fragment);
+        void onDestroyView();
     }
 
     public interface onDestroyCallback extends LifeCycleCallback {
-        void onDestroy(Fragment fragment);
+        void onDestroy();
     }
 
     public interface onAttachCallback extends LifeCycleCallback {
-        void onAttach(Fragment fragment, Activity activity);
+        void onAttach(Activity activity);
     }
 
     public interface onDetachCallback extends LifeCycleCallback {
-        void onDetach(Fragment fragment);
+        void onDetach();
     }
 
     public interface onConfigurationChangedCallback extends LifeCycleCallback {
-        void onConfigurationChanged(Fragment fragment, Configuration newConfig);
+        void onConfigurationChanged(Configuration newConfig);
     }
 
     public interface onNewIntentCallback extends LifeCycleCallback {
-        void onNewIntent(Fragment fragment, Intent intent);
+        void onNewIntent(Intent intent);
     }
 
     public interface onActivityResultCallback extends LifeCycleCallback {
-        void onActivityResultCallback(Fragment fragment, int requestCode, int resultCode, Intent data);
+        void onActivityResultCallback(int requestCode, int resultCode, Intent data);
     }
 
     public interface focusedCallback extends onResumeCallback, onPauseCallback {

@@ -13,11 +13,11 @@ public class InstanceStateCallbacks {
     }
 
     public interface onSaveInstanceStateCallback {
-        public void onSaveInstanceState(Activity activity, Bundle outState);
+        public void onSaveInstanceState(Bundle outState);
     }
 
     public interface onRestoreInstanceStateCallback {
-        public void onRestoreInstanceState(Activity activity, Bundle savedInstanceState);
+        public void onRestoreInstanceState(Bundle savedInstanceState);
     }
 
     public interface persistInstanceStateCallback extends onSaveInstanceStateCallback, onRestoreInstanceStateCallback {

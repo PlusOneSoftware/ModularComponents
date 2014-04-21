@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,206 +47,206 @@ public class FragmentModule extends ComponentModule {
         mMenuCallbacks.remove(cb);
     }
 
-    public void onActivityCreated(Fragment fragment, Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
         if(mLifeCycleCallbacks.isEmpty()) {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
             if (cb instanceof LifeCycleCallbacks.onActivityCreatedCallback) {
-                ((LifeCycleCallbacks.onActivityCreatedCallback) cb).onActivityCreated(fragment, savedInstanceState);
+                ((LifeCycleCallbacks.onActivityCreatedCallback) cb).onActivityCreated(savedInstanceState);
             }
         }
     }
 
-    public void onAttach(Fragment fragment, Activity activity) {
+    public void onAttach(Activity activity) {
         if(mLifeCycleCallbacks.isEmpty()) {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
             if(cb instanceof LifeCycleCallbacks.onAttachCallback) {
-                ((LifeCycleCallbacks.onAttachCallback) cb).onAttach(fragment, activity);
+                ((LifeCycleCallbacks.onAttachCallback) cb).onAttach(activity);
             }
         }
     }
 
-    public void onCreate(Fragment fragment, Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         if(mLifeCycleCallbacks.isEmpty()) {
             return;
         }
         for (LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
             if (cb instanceof LifeCycleCallbacks.onCreateCallback) {
-                ((LifeCycleCallbacks.onCreateCallback) cb).onCreate(fragment, savedInstanceState);
+                ((LifeCycleCallbacks.onCreateCallback) cb).onCreate(savedInstanceState);
             }
         }
     }
 
-    public void onViewCreated(Fragment fragment, View view, Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         if(mLifeCycleCallbacks.isEmpty()) {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
             if(cb instanceof LifeCycleCallbacks.onViewCreatedCallback) {
-                ((LifeCycleCallbacks.onViewCreatedCallback) cb).onViewCreated(fragment, view, savedInstanceState);
+                ((LifeCycleCallbacks.onViewCreatedCallback) cb).onViewCreated(view, savedInstanceState);
             }
         }
     }
-    public void onStart(Fragment fragment) {
+    public void onStart() {
         if(mLifeCycleCallbacks.isEmpty()) {
             return;
         }
         for (LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
             if (cb instanceof LifeCycleCallbacks.onStartCallback) {
-                ((LifeCycleCallbacks.onStartCallback) cb).onStart(fragment);
+                ((LifeCycleCallbacks.onStartCallback) cb).onStart();
             }
         }
     }
 
-    public void onResume(Fragment fragment) {
+    public void onResume() {
         if(mLifeCycleCallbacks.isEmpty()) {
             return;
         }
         for (LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
             if (cb instanceof LifeCycleCallbacks.onResumeCallback) {
-                ((LifeCycleCallbacks.onResumeCallback) cb).onResume(fragment);
+                ((LifeCycleCallbacks.onResumeCallback) cb).onResume();
             }
         }
     }
 
-    public void onPause(Fragment fragment) {
+    public void onPause() {
         if(mLifeCycleCallbacks.isEmpty()) {
             return;
         }
         for (LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
             if (cb instanceof LifeCycleCallbacks.onPauseCallback) {
-                ((LifeCycleCallbacks.onPauseCallback) cb).onPause(fragment);
+                ((LifeCycleCallbacks.onPauseCallback) cb).onPause();
             }
         }
     }
 
-    public void onStop(Fragment fragment) {
+    public void onStop() {
         if(mLifeCycleCallbacks.isEmpty()) {
             return;
         }
         for (LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
             if (cb instanceof LifeCycleCallbacks.onStopCallback) {
-                ((LifeCycleCallbacks.onStopCallback) cb).onStop(fragment);
+                ((LifeCycleCallbacks.onStopCallback) cb).onStop();
             }
         }
     }
 
-    public void onDestroyView(Fragment fragment) {
+    public void onDestroyView() {
         if(mLifeCycleCallbacks.isEmpty()) {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
             if(cb instanceof LifeCycleCallbacks.onDestroyViewCallback) {
-                ((LifeCycleCallbacks.onDestroyViewCallback) cb).onDestroyView(fragment);
+                ((LifeCycleCallbacks.onDestroyViewCallback) cb).onDestroyView();
             }
         }
     }
-    public void onDestroy(Fragment fragment) {
+    public void onDestroy() {
         if(mLifeCycleCallbacks.isEmpty()) {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
             if (cb instanceof LifeCycleCallbacks.onDestroyCallback) {
-                ((LifeCycleCallbacks.onDestroyCallback) cb).onDestroy(fragment);
+                ((LifeCycleCallbacks.onDestroyCallback) cb).onDestroy();
             }
         }
     }
 
-    public void onDetach(Fragment fragment) {
+    public void onDetach() {
         if(mLifeCycleCallbacks.isEmpty()) {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
             if(cb instanceof LifeCycleCallbacks.onDetachCallback) {
-                ((LifeCycleCallbacks.onDetachCallback) cb).onDetach(fragment);
+                ((LifeCycleCallbacks.onDetachCallback) cb).onDetach();
             }
         }
     }
 
-    public void onConfigurationChanged(Fragment fragment, Configuration newConfig) {
+    public void onConfigurationChanged(Configuration newConfig) {
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
             if(cb instanceof LifeCycleCallbacks.onConfigurationChangedCallback) {
-                ((LifeCycleCallbacks.onConfigurationChangedCallback) cb).onConfigurationChanged(fragment, newConfig);
+                ((LifeCycleCallbacks.onConfigurationChangedCallback) cb).onConfigurationChanged(newConfig);
             }
         }
     }
 
-    public void onSaveInstanceState(Fragment fragment, Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         if(mInstanceStateCallbacks.isEmpty()) {
             return;
         }
         for(InstanceStateCallbacks.InstanceStateCallback cb : mInstanceStateCallbacks) {
             if (cb instanceof InstanceStateCallbacks.onSaveInstanceStateCallback) {
-                ((InstanceStateCallbacks.onSaveInstanceStateCallback) cb).onSaveInstanceState(fragment, outState);
+                ((InstanceStateCallbacks.onSaveInstanceStateCallback) cb).onSaveInstanceState(outState);
             }
         }
     }
 
-    public void onViewStateRestored(Fragment fragment, Bundle savedInstanceState) {
+    public void onViewStateRestored(Bundle savedInstanceState) {
         if(mInstanceStateCallbacks.isEmpty()) {
             return;
         }
         for(InstanceStateCallbacks.InstanceStateCallback cb: mInstanceStateCallbacks) {
             if (cb instanceof InstanceStateCallbacks.onViewStateRestoredCallback) {
-                ((InstanceStateCallbacks.onViewStateRestoredCallback) cb).onViewStateRestored(fragment, savedInstanceState);
+                ((InstanceStateCallbacks.onViewStateRestoredCallback) cb).onViewStateRestored(savedInstanceState);
             }
         }
     }
 
-    public void onNewIntent(Fragment fragment, Intent intent) {
+    public void onNewIntent(Intent intent) {
         if(mLifeCycleCallbacks.isEmpty()) {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
             if(cb instanceof LifeCycleCallbacks.onNewIntentCallback) {
-                ((LifeCycleCallbacks.onNewIntentCallback) cb).onNewIntent(fragment, intent);
+                ((LifeCycleCallbacks.onNewIntentCallback) cb).onNewIntent(intent);
             }
         }
     }
 
-    public void onActivityResult(Fragment fragment, int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(mLifeCycleCallbacks.isEmpty()) {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
             if(cb instanceof LifeCycleCallbacks.onActivityResultCallback) {
-                ((LifeCycleCallbacks.onActivityResultCallback) cb).onActivityResultCallback(fragment, requestCode, resultCode, data);
+                ((LifeCycleCallbacks.onActivityResultCallback) cb).onActivityResultCallback(requestCode, resultCode, data);
             }
         }
     }
 
-    public void onCreateOptionsMenu(Fragment fragment, Menu menu) {
+    public void onCreateOptionsMenu(Menu menu) {
         if(mMenuCallbacks.isEmpty()) {
             return;
         }
         for(MenuCallbacks.MenuCallback cb : mMenuCallbacks) {
             if(cb instanceof MenuCallbacks.onCreateOptionsMenuCallback) {
-                ((MenuCallbacks.onCreateOptionsMenuCallback) cb).onCreateOptionsMenu(fragment, menu);
+                ((MenuCallbacks.onCreateOptionsMenuCallback) cb).onCreateOptionsMenu(menu);
             }
         }
     }
 
-    public void onPrepareOptionsMenu(Fragment fragment, Menu menu) {
+    public void onPrepareOptionsMenu(Menu menu) {
         if(mMenuCallbacks.isEmpty()) {
             return;
         }
         for(MenuCallbacks.MenuCallback cb : mMenuCallbacks) {
             if(cb instanceof MenuCallbacks.onPrepareOptionsMenuCallback) {
-                ((MenuCallbacks.onPrepareOptionsMenuCallback) cb).onPrepareOptionsMenu(fragment, menu);
+                ((MenuCallbacks.onPrepareOptionsMenuCallback) cb).onPrepareOptionsMenu(menu);
             }
         }
     }
 
-    public boolean onOptionsItemSelected(Fragment fragment, MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         if(mMenuCallbacks.isEmpty()) {
             return false;
         }
         for(MenuCallbacks.MenuCallback cb : mMenuCallbacks) {
             if(cb instanceof MenuCallbacks.onOptionsItemSelectedCallback) {
-                if(((MenuCallbacks.onOptionsItemSelectedCallback) cb).onOptionsItemSelectedActivity(fragment, item)) {
+                if(((MenuCallbacks.onOptionsItemSelectedCallback) cb).onOptionsItemSelectedActivity(item)) {
                     return true;
                 }
             }
@@ -255,35 +254,35 @@ public class FragmentModule extends ComponentModule {
         return false;
     }
 
-    public void onOptionsMenuClosed(Fragment fragment, Menu menu) {
+    public void onOptionsMenuClosed(Menu menu) {
         if(mMenuCallbacks.isEmpty()) {
             return;
         }
         for(MenuCallbacks.MenuCallback cb : mMenuCallbacks) {
             if(cb instanceof MenuCallbacks.onOptionsMenuClosedCallback) {
-                ((MenuCallbacks.onOptionsMenuClosedCallback) cb).onOptionsMenuClosed(fragment, menu);
+                ((MenuCallbacks.onOptionsMenuClosedCallback) cb).onOptionsMenuClosed(menu);
             }
         }
     }
 
-    public void onCreateContextMenu(Fragment fragment, ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         if(mMenuCallbacks.isEmpty()) {
             return;
         }
         for(MenuCallbacks.MenuCallback cb : mMenuCallbacks) {
             if(cb instanceof MenuCallbacks.onCreateContextMenuCallback) {
-                ((MenuCallbacks.onCreateContextMenuCallback) cb).onCreateContextMenu(fragment, menu, v, menuInfo);
+                ((MenuCallbacks.onCreateContextMenuCallback) cb).onCreateContextMenu(menu, v, menuInfo);
             }
         }
     }
 
-    public boolean onContextItemSelected(Fragment fragment, MenuItem item) {
+    public boolean onContextItemSelected(MenuItem item) {
         if(mMenuCallbacks.isEmpty()) {
             return false;
         }
         for(MenuCallbacks.MenuCallback cb : mMenuCallbacks) {
             if(cb instanceof MenuCallbacks.onContextItemSelectedCallback) {
-                if(((MenuCallbacks.onContextItemSelectedCallback) cb).onContextItemSelected(fragment, item)) {
+                if(((MenuCallbacks.onContextItemSelectedCallback) cb).onContextItemSelected(item)) {
                     return true;
                 }
             }
