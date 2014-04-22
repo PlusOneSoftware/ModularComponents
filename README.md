@@ -58,6 +58,8 @@ To use:
             addCallbackListener(new DrawerToggle(this, drawer, R.id.ic_icon, R.string.open, R.string.close);
             ...
         }
+    ...
+    }
 
 
 Custom Method Example
@@ -68,7 +70,7 @@ In the example above, our `DrawerToggleModule` registers itself as the `DrawerLi
 Using Custom Method Callbacks, you could instead use this class:
 
     public class DrawerListenerModule implements DrawerLayout.DrawerListener {
-    
+
         public static final String onDrawerSlide = "onDrawerSlide";
         public static final String onDrawerOpened = "onDrawerOpened";
         public static final String onDrawerClosed = "onDrawerClosed";
@@ -145,4 +147,24 @@ and a modified version of the above DrawerToggleModule:
         }
     }
 
-Then in your activity, you can `addCallbackListener`s (multiple callbacks for the same methods) to the methods you're interested in
+Then in your activity, you can `addCallbackListener`s (multiple callbacks for the same methods) to the methods you're interested in:
+
+    public class LoginActivity extends ModularFragmentActivity {
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            ...
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer);
+            addCallbackListener(new FacebookUiLifecycle());
+            // setup the DrawerListener and register the methods, this has to be created before the DrawerToggle so that it's callbacks are registered to the methods
+            DrawerListenerModule module = new DrawerListenerModule(getModuleController(), drawer);
+            addCallbackListener(new DrawerToggle(this, drawer, R.id.ic_icon, R.string.open, R.string.close);
+            addCallbackListener(DrawerListenerModule.onDrawerSlide, new CustomModuleController.ModuleMethodCallback<Pair<View, Float>>() {
+                @Override
+                public void trigger(Pair<View, Float> args) {
+                    // do something cool as the menu slides
+                }
+            });            
+            ...
+        }
+    ...
+    }
