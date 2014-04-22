@@ -19,7 +19,7 @@ import uk.co.plusonesoftware.modular.CustomModuleController;
  */
 public class FragmentModuleController extends CustomModuleController {
 
-    public interface FragmentCallback {
+    public interface FragmentCallback extends ComponentCallback {
 
     }
 
@@ -27,7 +27,8 @@ public class FragmentModuleController extends CustomModuleController {
     private List<InstanceStateCallbacks.InstanceStateCallback> mInstanceStateCallbacks = new ArrayList<InstanceStateCallbacks.InstanceStateCallback>();
     private List<MenuCallbacks.MenuCallback> mMenuCallbacks = new ArrayList<MenuCallbacks.MenuCallback>();
 
-    public void addCallbackListener(FragmentCallback cb) {
+    @Override
+    public void addCallbackListener(ComponentCallback cb) {
         if(cb instanceof LifeCycleCallbacks.LifeCycleCallback) {
             mLifeCycleCallbacks.add((LifeCycleCallbacks.LifeCycleCallback) cb);
         }
@@ -41,7 +42,8 @@ public class FragmentModuleController extends CustomModuleController {
         }
     }
 
-    public void removeCallbackListener(FragmentCallback cb) {
+    @Override
+    public void removeCallbackListener(ComponentCallback cb) {
         mLifeCycleCallbacks.remove(cb);
         mInstanceStateCallbacks.remove(cb);
         mMenuCallbacks.remove(cb);

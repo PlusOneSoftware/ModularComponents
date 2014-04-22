@@ -11,10 +11,10 @@ import uk.co.plusonesoftware.modular.CustomModuleController;
  */
 public class DrawerListenerModule implements DrawerLayout.DrawerListener {
 
-    public static final String onDrawerSlide = "onDrawerSlide";
-    public static final String onDrawerOpened = "onDrawerOpened";
-    public static final String onDrawerClosed = "onDrawerClosed";
-    public static final String onDrawerStateChanged = "onDrawerStateChanged";
+    public static final String onDrawerSlide = "DrawerLayout.DrawerListener.onDrawerSlide";
+    public static final String onDrawerOpened = "DrawerLayout.DrawerListener.onDrawerOpened";
+    public static final String onDrawerClosed = "DrawerLayout.DrawerListener.onDrawerClosed";
+    public static final String onDrawerStateChanged = "DrawerLayout.DrawerListener.onDrawerStateChanged";
 
     private CustomModuleController mController;
 

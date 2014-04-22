@@ -5,16 +5,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import uk.co.plusonesoftware.modular.fragment.InstanceStateCallbacks;
+import uk.co.plusonesoftware.modular.fragment.LifeCycleCallbacks;
+import uk.co.plusonesoftware.modular.fragment.MenuCallbacks;
+
 /**
  * Created by James on 18/04/2014.
  */
-public class CustomModuleController {
+public abstract class CustomModuleController {
+
+    public interface ComponentCallback {
+        // For known API methods
+    }
 
     public interface ModuleMethodCallback<T> {
         void trigger(T args);
     }
 
     private Map<String, List<ModuleMethodCallback>> mMethods = new HashMap<String, List<ModuleMethodCallback>>();
+
+    public abstract void addCallbackListener(ComponentCallback cb);
+
+    public abstract void removeCallbackListener(ComponentCallback cb);
 
     /**
      * Register a method. A registered method can have callbacks registered to listen for it, which will be called if the method is triggered
@@ -41,6 +53,7 @@ public class CustomModuleController {
      * @param <T> type of input
      * @return true if at least one callback listener was triggered
      */
+
     public <T> boolean trigger(String method, T args) {
         if(mMethods.containsKey(method)) {
             final List<ModuleMethodCallback> callbacks = mMethods.get(method);
@@ -55,19 +68,16 @@ public class CustomModuleController {
     }
 
     /**
-     * Add a listener to a specific method
+     * Add a listener to a specific method, registering the method if it hasn't been before
      * @param method method to add the callback to
      * @param callback the callback which will be called if the method is triggered
-     * @return true if the method has been registered
      */
-    public boolean addCallbackListener(String method, ModuleMethodCallback callback) {
-        if(mMethods.containsKey(method)) {
-            final List<ModuleMethodCallback> callbacks = mMethods.get(method);
-            callbacks.add(callback);
-            return true;
+    public void addCallbackListener(String method, ModuleMethodCallback callback) {
+        if(!mMethods.containsKey(method)) {
+            registerMethod(method);
         }
-
-        return false;
+        final List<ModuleMethodCallback> callbacks = mMethods.get(method);
+        callbacks.add(callback);
     }
 
     /**

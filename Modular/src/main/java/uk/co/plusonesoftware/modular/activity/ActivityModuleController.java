@@ -20,7 +20,7 @@ import uk.co.plusonesoftware.modular.CustomModuleController;
  */
 public class ActivityModuleController extends CustomModuleController {
 
-    public interface ActivityCallback {
+    public interface ActivityCallback extends ComponentCallback {
 
     }
 
@@ -31,7 +31,8 @@ public class ActivityModuleController extends CustomModuleController {
     private List<SupportFragmentCallbacks.SupportFragmentCallback> mSupportFragmentCallbacks = new ArrayList<SupportFragmentCallbacks.SupportFragmentCallback>();
     private List<MenuCallbacks.MenuCallback> mMenuCallbacks = new ArrayList<MenuCallbacks.MenuCallback>();
 
-    public void addCallbackListener(ActivityCallback cb) {
+    @Override
+    public void addCallbackListener(ComponentCallback cb) {
         if(cb instanceof LifeCycleCallbacks.LifeCycleCallback) {
             mLifeCycleCallbacks.add((LifeCycleCallbacks.LifeCycleCallback) cb);
         }
@@ -57,7 +58,8 @@ public class ActivityModuleController extends CustomModuleController {
         }
     }
 
-    public void removeCallbackListener(ActivityCallback cb) {
+    @Override
+    public void removeCallbackListener(ComponentCallback cb) {
         mLifeCycleCallbacks.remove(cb);
         mInstanceStateCallbacks.remove(cb);
         mUserInteractionCallbacks.remove(cb);
