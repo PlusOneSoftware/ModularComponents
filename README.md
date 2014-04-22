@@ -8,7 +8,7 @@ Create a module and register it with an Activity / Fragment which has the corres
 
 `ModularActivity`, `ModularFragmentActivity`, `ModularFragment` and `ModularSupportFragment` are provided in the library to extend from.
 
-`CustomModuleController` (which the Activity and Fragment controllers extends from) also providers a way to register callbacks to custom events.
+`CustomModuleController` (which the Activity and Fragment controllers extends from) also provides a way to register callbacks to custom events.
 
 Example
 ------
