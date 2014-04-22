@@ -44,6 +44,10 @@ public class ActivityModuleController extends CustomModuleController {
             mUserInteractionCallbacks.add((UserInteractionCallbacks.UserInteractionCallback) cb);
         }
 
+        if(cb instanceof FragmentCallbacks.FragmentCallback) {
+            mFragmentCallbacks.add((FragmentCallbacks.FragmentCallback) cb);
+        }
+
         if(cb instanceof SupportFragmentCallbacks.SupportFragmentCallback) {
             mSupportFragmentCallbacks.add((SupportFragmentCallbacks.SupportFragmentCallback) cb);
         }
@@ -57,6 +61,7 @@ public class ActivityModuleController extends CustomModuleController {
         mLifeCycleCallbacks.remove(cb);
         mInstanceStateCallbacks.remove(cb);
         mUserInteractionCallbacks.remove(cb);
+        mFragmentCallbacks.remove(cb);
         mSupportFragmentCallbacks.remove(cb);
         mMenuCallbacks.remove(cb);
     }
