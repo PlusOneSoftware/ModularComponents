@@ -48,6 +48,10 @@ public class ModularFragment extends Fragment {
         mModule.removeMethod(method);
     }
 
+    public FragmentModuleController getModuleController() {
+        return mModule;
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

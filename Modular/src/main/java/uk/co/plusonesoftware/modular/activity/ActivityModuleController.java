@@ -239,7 +239,7 @@ public class ActivityModuleController extends CustomModuleController {
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
             if(cb instanceof LifeCycleCallbacks.onActivityResultCallback) {
-                ((LifeCycleCallbacks.onActivityResultCallback) cb).onActivityResultCallback(requestCode, resultCode, data);
+                ((LifeCycleCallbacks.onActivityResultCallback) cb).onActivityResult(requestCode, resultCode, data);
             }
         }
     }
@@ -342,7 +342,7 @@ public class ActivityModuleController extends CustomModuleController {
         }
         for(MenuCallbacks.MenuCallback cb : mMenuCallbacks) {
             if(cb instanceof MenuCallbacks.onOptionsItemSelectedCallback) {
-                if(((MenuCallbacks.onOptionsItemSelectedCallback) cb).onOptionsItemSelectedActivity(item)) {
+                if(((MenuCallbacks.onOptionsItemSelectedCallback) cb).onOptionsItemSelected(item)) {
                     return true;
                 }
             }

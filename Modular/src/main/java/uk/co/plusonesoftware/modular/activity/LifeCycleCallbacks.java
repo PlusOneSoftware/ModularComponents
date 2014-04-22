@@ -69,7 +69,7 @@ public class LifeCycleCallbacks {
     }
 
     public interface onActivityResultCallback extends LifeCycleCallback {
-        void onActivityResultCallback(int requestCode, int resultCode, Intent data);
+        void onActivityResult(int requestCode, int resultCode, Intent data);
     }
 
     public interface attachedCallback extends onAttachedToWindowCallback, onDetachedFromWindowCallback {

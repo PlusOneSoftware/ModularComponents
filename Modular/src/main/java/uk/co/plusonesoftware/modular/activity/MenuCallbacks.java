@@ -23,7 +23,7 @@ public class MenuCallbacks {
     }
 
     public interface onOptionsItemSelectedCallback extends MenuCallback {
-        boolean onOptionsItemSelectedActivity(MenuItem item);
+        boolean onOptionsItemSelected(MenuItem item);
     }
 
     public interface onOptionsMenuClosedCallback extends MenuCallback {

@@ -43,6 +43,10 @@ public class ModularFragmentActivity extends FragmentActivity implements Support
         mModule.removeMethod(method);
     }
 
+    public ActivityModuleController getModuleController() {
+        return mModule;
+    }
+
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
