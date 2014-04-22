@@ -54,7 +54,7 @@ To use:
         protected void onCreate(Bundle savedInstanceState) {
             ...
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer);
-            addCallbackListener(new FacebookUiLifecycle());
+            addCallbackListener(new FacebookUiLifecycle(this, null));
             addCallbackListener(new DrawerToggle(this, drawer, R.id.ic_icon, R.string.open, R.string.close);
             ...
         }
