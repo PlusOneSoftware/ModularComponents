@@ -89,6 +89,7 @@ Using Custom Method Callbacks, you could instead use this class:
     
         @Override
         public void onDrawerSlide(View drawerView, float slideOffset) {
+            // Creating a Pair here isn't a great idea (this will be called lots of times).
             mController.trigger(onDrawerSlide, Pair.create(drawerView, slideOffset));
         }
     
