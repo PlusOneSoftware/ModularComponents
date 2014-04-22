@@ -5,36 +5,43 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import uk.co.plusonesoftware.modular.ComponentModule;
+import uk.co.plusonesoftware.modular.CustomModuleController;
 
 /**
  * Created by James on 18/04/2014.
  */
 public class ModularActivity extends Activity implements FragmentCallbacks.onFragmentViewCreatedCallback {
 
-    private ActivityModule mModule = new ActivityModule();
+    private ActivityModuleController mModule = new ActivityModuleController();
 
-    public void addCallbackListener(ActivityModule.ActivityCallback callback) {
+    public void addCallbackListener(ActivityModuleController.ActivityCallback callback) {
         mModule.addCallbackListener(callback);
     }
 
-    public void removeCallbackListener(ActivityModule.ActivityCallback callback) {
+    public boolean addCallbackListener(String method, CustomModuleController.ModuleMethodCallback callback) {
+        return mModule.addCallbackListener(method, callback);
+    }
+
+    public void removeCallbackListener(ActivityModuleController.ActivityCallback callback) {
         mModule.removeCallbackListener(callback);
     }
 
-    public <IR, IT, TR, TT> IR registerMethod(ComponentModule.ModuleMethod<IR, IT, TR, TT> callback, IT args) {
-        return mModule.registerMethod(callback, args);
+    public boolean removeCallbackListener(String method, CustomModuleController.ModuleMethodCallback callback) {
+        return mModule.removeCallbackListener(method, callback);
     }
 
-    public void removeMethod(ComponentModule.ModuleMethod callback) {
-        mModule.removeMethod(callback);
+    public void registerMethod(String method) {
+        mModule.registerMethod(method);
+    }
+
+    public void removeMethod(String method) {
+        mModule.removeMethod(method);
     }
 
     @Override

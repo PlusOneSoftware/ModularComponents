@@ -9,15 +9,15 @@ import android.view.View;
  */
 public class SupportFragmentCallbacks {
 
-    public interface FragmentCallback extends ActivityModule.ActivityCallback {
+    public interface SupportFragmentCallback extends ActivityModuleController.ActivityCallback {
 
     }
 
-    public interface onAttachFragmentCallback extends FragmentCallback {
+    public interface onAttachFragmentCallback extends SupportFragmentCallback {
         void onAttachFragment(Fragment fragment);
     }
 
-    public interface onFragmentViewCreatedCallback extends FragmentCallback {
+    public interface onFragmentViewCreatedCallback extends SupportFragmentCallback {
         void onFragmentViewCreated(Fragment fragment, View view, Bundle savedInstanceState);
     }
 }

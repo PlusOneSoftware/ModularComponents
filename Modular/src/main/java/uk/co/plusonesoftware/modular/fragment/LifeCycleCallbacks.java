@@ -10,7 +10,7 @@ import android.view.View;
  * Created by James on 18/04/2014.
  */
 public class LifeCycleCallbacks {
-    public interface LifeCycleCallback extends FragmentModule.FragmentCallback {
+    public interface LifeCycleCallback extends FragmentModuleController.FragmentCallback {
 
     }
 

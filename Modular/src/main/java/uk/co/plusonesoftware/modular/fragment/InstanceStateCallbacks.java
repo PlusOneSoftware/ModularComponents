@@ -7,7 +7,7 @@ import android.os.Bundle;
  */
 public class InstanceStateCallbacks {
 
-    public interface InstanceStateCallback extends FragmentModule.FragmentCallback {
+    public interface InstanceStateCallback extends FragmentModuleController.FragmentCallback {
 
     }
 

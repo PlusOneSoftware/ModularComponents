@@ -9,7 +9,7 @@ import android.view.View;
  */
 public class FragmentCallbacks {
 
-    public interface FragmentCallback extends ActivityModule.ActivityCallback {
+    public interface FragmentCallback extends ActivityModuleController.ActivityCallback {
 
     }
 

@@ -13,7 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import uk.co.plusonesoftware.modular.ComponentModule;
+import uk.co.plusonesoftware.modular.CustomModuleController;
 import uk.co.plusonesoftware.modular.activity.FragmentCallbacks;
 
 /**
@@ -22,22 +22,30 @@ import uk.co.plusonesoftware.modular.activity.FragmentCallbacks;
 @TargetApi(11)
 public class ModularFragment extends Fragment {
 
-    private FragmentModule mModule = new FragmentModule();
+    private FragmentModuleController mModule = new FragmentModuleController();
 
-    public void addCallbackListener(FragmentModule.FragmentCallback callback) {
+    public void addCallbackListener(FragmentModuleController.FragmentCallback callback) {
         mModule.addCallbackListener(callback);
     }
 
-    public void removeCallbackListener(FragmentModule.FragmentCallback callback) {
+    public boolean addCallbackListener(String method, CustomModuleController.ModuleMethodCallback callback) {
+        return mModule.addCallbackListener(method, callback);
+    }
+
+    public void removeCallbackListener(FragmentModuleController.FragmentCallback callback) {
         mModule.removeCallbackListener(callback);
     }
 
-    public <IR, IT, TR, TT> IR registerMethod(ComponentModule.ModuleMethod<IR, IT, TR, TT> callback, IT args) {
-        return mModule.registerMethod(callback, args);
+    public boolean removeCallbackListener(String method, CustomModuleController.ModuleMethodCallback callback) {
+        return mModule.removeCallbackListener(method, callback);
     }
 
-    public void removeMethod(ComponentModule.ModuleMethod callback) {
-        mModule.removeMethod(callback);
+    public void registerMethod(String method) {
+        mModule.registerMethod(method);
+    }
+
+    public void removeMethod(String method) {
+        mModule.removeMethod(method);
     }
 
     @Override

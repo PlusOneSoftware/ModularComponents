@@ -1,10 +1,9 @@
-package uk.co.plusonesoftware.modular.activity;
+package uk.co.plusonesoftware.modular.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,25 +12,22 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import uk.co.plusonesoftware.modular.ComponentModule;
+import uk.co.plusonesoftware.modular.CustomModuleController;
 
 /**
  * Created by James on 18/04/2014.
  */
-public class ActivityModule extends ComponentModule {
+public class FragmentModuleController extends CustomModuleController {
 
-    public interface ActivityCallback {
+    public interface FragmentCallback {
 
     }
 
     private List<LifeCycleCallbacks.LifeCycleCallback> mLifeCycleCallbacks = new ArrayList<LifeCycleCallbacks.LifeCycleCallback>();
     private List<InstanceStateCallbacks.InstanceStateCallback> mInstanceStateCallbacks = new ArrayList<InstanceStateCallbacks.InstanceStateCallback>();
-    private List<UserInteractionCallbacks.UserInteractionCallback> mUserInteractionCallbacks = new ArrayList<UserInteractionCallbacks.UserInteractionCallback>();
-    private List<FragmentCallbacks.FragmentCallback> mFragmentCallbacks = new ArrayList<FragmentCallbacks.FragmentCallback>();
-    private List<SupportFragmentCallbacks.FragmentCallback> mSupportFragmentCallbacks = new ArrayList<SupportFragmentCallbacks.FragmentCallback>();
     private List<MenuCallbacks.MenuCallback> mMenuCallbacks = new ArrayList<MenuCallbacks.MenuCallback>();
 
-    public void addCallbackListener(ActivityCallback cb) {
+    public void addCallbackListener(FragmentCallback cb) {
         if(cb instanceof LifeCycleCallbacks.LifeCycleCallback) {
             mLifeCycleCallbacks.add((LifeCycleCallbacks.LifeCycleCallback) cb);
         }
@@ -40,34 +36,35 @@ public class ActivityModule extends ComponentModule {
             mInstanceStateCallbacks.add((InstanceStateCallbacks.InstanceStateCallback) cb);
         }
 
-        if(cb instanceof UserInteractionCallbacks.UserInteractionCallback) {
-            mUserInteractionCallbacks.add((UserInteractionCallbacks.UserInteractionCallback) cb);
-        }
-
-        if(cb instanceof SupportFragmentCallbacks.FragmentCallback) {
-            mSupportFragmentCallbacks.add((SupportFragmentCallbacks.FragmentCallback) cb);
-        }
-
         if(cb instanceof MenuCallbacks.MenuCallback) {
             mMenuCallbacks.add((MenuCallbacks.MenuCallback) cb);
         }
     }
 
-    public void removeCallbackListener(ActivityCallback cb) {
+    public void removeCallbackListener(FragmentCallback cb) {
         mLifeCycleCallbacks.remove(cb);
         mInstanceStateCallbacks.remove(cb);
-        mUserInteractionCallbacks.remove(cb);
-        mSupportFragmentCallbacks.remove(cb);
         mMenuCallbacks.remove(cb);
     }
 
-    public void onAttachedToWindow() {
+    public void onActivityCreated(Bundle savedInstanceState) {
         if(mLifeCycleCallbacks.isEmpty()) {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if (cb instanceof LifeCycleCallbacks.onAttachedToWindowCallback) {
-                ((LifeCycleCallbacks.onAttachedToWindowCallback) cb).onAttachedToWindow();
+            if (cb instanceof LifeCycleCallbacks.onActivityCreatedCallback) {
+                ((LifeCycleCallbacks.onActivityCreatedCallback) cb).onActivityCreated(savedInstanceState);
+            }
+        }
+    }
+
+    public void onAttach(Activity activity) {
+        if(mLifeCycleCallbacks.isEmpty()) {
+            return;
+        }
+        for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
+            if(cb instanceof LifeCycleCallbacks.onAttachCallback) {
+                ((LifeCycleCallbacks.onAttachCallback) cb).onAttach(activity);
             }
         }
     }
@@ -83,17 +80,16 @@ public class ActivityModule extends ComponentModule {
         }
     }
 
-    public void onPostCreate(Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         if(mLifeCycleCallbacks.isEmpty()) {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if(cb instanceof LifeCycleCallbacks.onPostCreateCallback) {
-                ((LifeCycleCallbacks.onPostCreateCallback) cb).onPostCreate(savedInstanceState);
+            if(cb instanceof LifeCycleCallbacks.onViewCreatedCallback) {
+                ((LifeCycleCallbacks.onViewCreatedCallback) cb).onViewCreated(view, savedInstanceState);
             }
         }
     }
-
     public void onStart() {
         if(mLifeCycleCallbacks.isEmpty()) {
             return;
@@ -112,17 +108,6 @@ public class ActivityModule extends ComponentModule {
         for (LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
             if (cb instanceof LifeCycleCallbacks.onResumeCallback) {
                 ((LifeCycleCallbacks.onResumeCallback) cb).onResume();
-            }
-        }
-    }
-
-    public void onPostResume(Activity activity) {
-        if(mLifeCycleCallbacks.isEmpty()) {
-            return;
-        }
-        for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if(cb instanceof LifeCycleCallbacks.onPostResumeCallback) {
-                ((LifeCycleCallbacks.onPostResumeCallback) cb).onPostResume();
             }
         }
     }
@@ -149,13 +134,13 @@ public class ActivityModule extends ComponentModule {
         }
     }
 
-    public void onFinish() {
+    public void onDestroyView() {
         if(mLifeCycleCallbacks.isEmpty()) {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if(cb instanceof LifeCycleCallbacks.onFinishCallback) {
-                ((LifeCycleCallbacks.onFinishCallback) cb).onFinish();
+            if(cb instanceof LifeCycleCallbacks.onDestroyViewCallback) {
+                ((LifeCycleCallbacks.onDestroyViewCallback) cb).onDestroyView();
             }
         }
     }
@@ -170,24 +155,13 @@ public class ActivityModule extends ComponentModule {
         }
     }
 
-    public void onDetachedFromWindow() {
+    public void onDetach() {
         if(mLifeCycleCallbacks.isEmpty()) {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if(cb instanceof LifeCycleCallbacks.onDetachedFromWindowCallback) {
-                ((LifeCycleCallbacks.onDetachedFromWindowCallback) cb).onDetachedFromWindow();
-            }
-        }
-    }
-
-    public void onRestart() {
-        if(mLifeCycleCallbacks.isEmpty()) {
-            return;
-        }
-        for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if (cb instanceof LifeCycleCallbacks.onRestartCallback) {
-                ((LifeCycleCallbacks.onRestartCallback) cb).onRestart();
+            if(cb instanceof LifeCycleCallbacks.onDetachCallback) {
+                ((LifeCycleCallbacks.onDetachCallback) cb).onDetach();
             }
         }
     }
@@ -195,7 +169,7 @@ public class ActivityModule extends ComponentModule {
     public void onConfigurationChanged(Configuration newConfig) {
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
             if(cb instanceof LifeCycleCallbacks.onConfigurationChangedCallback) {
-                ((LifeCycleCallbacks.onConfigurationChangedCallback) cb).onConfigurationChanged( newConfig);
+                ((LifeCycleCallbacks.onConfigurationChangedCallback) cb).onConfigurationChanged(newConfig);
             }
         }
     }
@@ -211,13 +185,13 @@ public class ActivityModule extends ComponentModule {
         }
     }
 
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
+    public void onViewStateRestored(Bundle savedInstanceState) {
         if(mInstanceStateCallbacks.isEmpty()) {
             return;
         }
         for(InstanceStateCallbacks.InstanceStateCallback cb: mInstanceStateCallbacks) {
-            if (cb instanceof InstanceStateCallbacks.onRestoreInstanceStateCallback) {
-                ((InstanceStateCallbacks.onRestoreInstanceStateCallback) cb).onRestoreInstanceState(savedInstanceState);
+            if (cb instanceof InstanceStateCallbacks.onViewStateRestoredCallback) {
+                ((InstanceStateCallbacks.onViewStateRestoredCallback) cb).onViewStateRestored(savedInstanceState);
             }
         }
     }
@@ -244,96 +218,26 @@ public class ActivityModule extends ComponentModule {
         }
     }
 
-    public void onBackPressed() {
-        if(mUserInteractionCallbacks.isEmpty()) {
-            return;
-        }
-        for(UserInteractionCallbacks.UserInteractionCallback cb : mUserInteractionCallbacks) {
-            if (cb instanceof UserInteractionCallbacks.onBackPressedCallback) {
-                ((UserInteractionCallbacks.onBackPressedCallback) cb).onBackPressed();
-            }
-        }
-    }
-
-    public void onUserInteraction() {
-        if(mUserInteractionCallbacks.isEmpty()) {
-            return;
-        }
-        for(UserInteractionCallbacks.UserInteractionCallback cb : mUserInteractionCallbacks) {
-            if (cb instanceof UserInteractionCallbacks.onUserInteractionCallback) {
-                ((UserInteractionCallbacks.onUserInteractionCallback) cb).onUserInteraction();
-            }
-        }
-    }
-
-    public void onAttachFragment(Fragment fragment) {
-        if(mSupportFragmentCallbacks.isEmpty()) {
-            return;
-        }
-        for(SupportFragmentCallbacks.FragmentCallback cb : mSupportFragmentCallbacks) {
-            if (cb instanceof SupportFragmentCallbacks.onAttachFragmentCallback) {
-                ((SupportFragmentCallbacks.onAttachFragmentCallback) cb).onAttachFragment(fragment);
-            }
-        }
-    }
-
-    public void onAttachFragment(android.app.Fragment fragment) {
-        if(mFragmentCallbacks.isEmpty()) {
-            return;
-        }
-        for(FragmentCallbacks.FragmentCallback cb : mFragmentCallbacks) {
-            if (cb instanceof FragmentCallbacks.onAttachFragmentCallback) {
-                ((FragmentCallbacks.onAttachFragmentCallback) cb).onAttachFragment(fragment);
-            }
-        }
-    }
-
-    public void onFragmentViewCreated(Fragment fragment, View view, Bundle savedInstanceState) {
-        if(mSupportFragmentCallbacks.isEmpty()) {
-            return;
-        }
-        for(SupportFragmentCallbacks.FragmentCallback cb : mSupportFragmentCallbacks) {
-            if(cb instanceof SupportFragmentCallbacks.onFragmentViewCreatedCallback) {
-                ((SupportFragmentCallbacks.onFragmentViewCreatedCallback) cb).onFragmentViewCreated(fragment, view, savedInstanceState);
-            }
-        }
-    }
-
-    public void onFragmentViewCreated(android.app.Fragment fragment, View view, Bundle savedInstanceState) {
-        if(mFragmentCallbacks.isEmpty()) {
-            return;
-        }
-        for(FragmentCallbacks.FragmentCallback cb : mFragmentCallbacks) {
-            if(cb instanceof FragmentCallbacks.onFragmentViewCreatedCallback) {
-                ((FragmentCallbacks.onFragmentViewCreatedCallback) cb).onFragmentViewCreated(fragment, view, savedInstanceState);
-            }
-        }
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public void onCreateOptionsMenu(Menu menu) {
         if(mMenuCallbacks.isEmpty()) {
-            return false;
+            return;
         }
-        boolean out = false;
         for(MenuCallbacks.MenuCallback cb : mMenuCallbacks) {
             if(cb instanceof MenuCallbacks.onCreateOptionsMenuCallback) {
-                out = out || ((MenuCallbacks.onCreateOptionsMenuCallback) cb).onCreateOptionsMenu(menu);
+                ((MenuCallbacks.onCreateOptionsMenuCallback) cb).onCreateOptionsMenu(menu);
             }
         }
-        return out;
     }
 
-    public boolean onPrepareOptionsMenu(Menu menu) {
+    public void onPrepareOptionsMenu(Menu menu) {
         if(mMenuCallbacks.isEmpty()) {
-            return false;
+            return;
         }
-        boolean out = false;
         for(MenuCallbacks.MenuCallback cb : mMenuCallbacks) {
             if(cb instanceof MenuCallbacks.onPrepareOptionsMenuCallback) {
-                out = out || ((MenuCallbacks.onPrepareOptionsMenuCallback) cb).onPrepareOptionsMenu(menu);
+                ((MenuCallbacks.onPrepareOptionsMenuCallback) cb).onPrepareOptionsMenu(menu);
             }
         }
-        return out;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -384,16 +288,5 @@ public class ActivityModule extends ComponentModule {
             }
         }
         return false;
-    }
-
-    public void onContextMenuClosed(Menu menu) {
-        if(mMenuCallbacks.isEmpty()) {
-            return;
-        }
-        for(MenuCallbacks.MenuCallback cb : mMenuCallbacks) {
-            if(cb instanceof MenuCallbacks.onContextMenuClosedCallback) {
-                ((MenuCallbacks.onContextMenuClosedCallback) cb).onContextMenuClosed(menu);
-            }
-        }
     }
 }

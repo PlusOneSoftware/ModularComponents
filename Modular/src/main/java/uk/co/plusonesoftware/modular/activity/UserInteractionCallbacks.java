@@ -5,7 +5,7 @@ package uk.co.plusonesoftware.modular.activity;
  */
 public class UserInteractionCallbacks {
 
-    public interface UserInteractionCallback extends ActivityModule.ActivityCallback {
+    public interface UserInteractionCallback extends ActivityModuleController.ActivityCallback {
 
     }
 

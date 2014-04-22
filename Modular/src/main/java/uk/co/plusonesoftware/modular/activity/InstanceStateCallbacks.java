@@ -1,6 +1,5 @@
 package uk.co.plusonesoftware.modular.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 /**
@@ -8,7 +7,7 @@ import android.os.Bundle;
  */
 public class InstanceStateCallbacks {
 
-    public interface InstanceStateCallback extends ActivityModule.ActivityCallback {
+    public interface InstanceStateCallback extends ActivityModuleController.ActivityCallback {
 
     }
 

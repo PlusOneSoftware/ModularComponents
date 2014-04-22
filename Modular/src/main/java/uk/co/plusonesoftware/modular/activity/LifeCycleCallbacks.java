@@ -8,7 +8,7 @@ import android.os.Bundle;
  * Created by James on 18/04/2014.
  */
 public class LifeCycleCallbacks {
-    public interface LifeCycleCallback extends ActivityModule.ActivityCallback {
+    public interface LifeCycleCallback extends ActivityModuleController.ActivityCallback {
 
     }
 

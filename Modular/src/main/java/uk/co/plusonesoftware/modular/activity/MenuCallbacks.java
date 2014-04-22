@@ -10,7 +10,7 @@ import android.view.View;
  */
 public class MenuCallbacks {
 
-    public interface MenuCallback extends ActivityModule.ActivityCallback {
+    public interface MenuCallback extends ActivityModuleController.ActivityCallback {
 
     }
 

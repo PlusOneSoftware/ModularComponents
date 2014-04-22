@@ -10,7 +10,7 @@ import android.view.View;
  */
 public class MenuCallbacks {
 
-    public interface MenuCallback extends FragmentModule.FragmentCallback {
+    public interface MenuCallback extends FragmentModuleController.FragmentCallback {
 
     }
 
