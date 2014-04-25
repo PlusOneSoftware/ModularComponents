@@ -27,12 +27,15 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import uk.co.plusonesoftware.modular.CustomModuleController;
+import uk.co.plusonesoftware.modular.InstanceStateCallbacks;
+import uk.co.plusonesoftware.modular.ModuleController;
+import uk.co.plusonesoftware.modular.LifeCycleCallbacks;
+import uk.co.plusonesoftware.modular.MenuCallbacks;
 
 /**
  * Created by James on 18/04/2014.
  */
-public class FragmentModuleController extends CustomModuleController {
+public class FragmentModuleController extends ModuleController {
 
     public interface FragmentCallback extends ComponentCallback {
 
@@ -69,8 +72,8 @@ public class FragmentModuleController extends CustomModuleController {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if (cb instanceof LifeCycleCallbacks.onActivityCreatedCallback) {
-                ((LifeCycleCallbacks.onActivityCreatedCallback) cb).onActivityCreated(savedInstanceState);
+            if (cb instanceof FragmentLifeCycleCallbacks.onActivityCreatedCallback) {
+                ((FragmentLifeCycleCallbacks.onActivityCreatedCallback) cb).onActivityCreated(savedInstanceState);
             }
         }
     }
@@ -80,8 +83,8 @@ public class FragmentModuleController extends CustomModuleController {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if(cb instanceof LifeCycleCallbacks.onAttachCallback) {
-                ((LifeCycleCallbacks.onAttachCallback) cb).onAttach(activity);
+            if(cb instanceof FragmentLifeCycleCallbacks.onAttachCallback) {
+                ((FragmentLifeCycleCallbacks.onAttachCallback) cb).onAttach(activity);
             }
         }
     }
@@ -91,8 +94,8 @@ public class FragmentModuleController extends CustomModuleController {
             return;
         }
         for (LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if (cb instanceof LifeCycleCallbacks.onCreateCallback) {
-                ((LifeCycleCallbacks.onCreateCallback) cb).onCreate(savedInstanceState);
+            if (cb instanceof FragmentLifeCycleCallbacks.onCreateCallback) {
+                ((FragmentLifeCycleCallbacks.onCreateCallback) cb).onCreate(savedInstanceState);
             }
         }
     }
@@ -102,8 +105,8 @@ public class FragmentModuleController extends CustomModuleController {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if(cb instanceof LifeCycleCallbacks.onViewCreatedCallback) {
-                ((LifeCycleCallbacks.onViewCreatedCallback) cb).onViewCreated(view, savedInstanceState);
+            if(cb instanceof FragmentLifeCycleCallbacks.onViewCreatedCallback) {
+                ((FragmentLifeCycleCallbacks.onViewCreatedCallback) cb).onViewCreated(view, savedInstanceState);
             }
         }
     }
@@ -112,8 +115,8 @@ public class FragmentModuleController extends CustomModuleController {
             return;
         }
         for (LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if (cb instanceof LifeCycleCallbacks.onStartCallback) {
-                ((LifeCycleCallbacks.onStartCallback) cb).onStart();
+            if (cb instanceof FragmentLifeCycleCallbacks.onStartCallback) {
+                ((FragmentLifeCycleCallbacks.onStartCallback) cb).onStart();
             }
         }
     }
@@ -123,8 +126,8 @@ public class FragmentModuleController extends CustomModuleController {
             return;
         }
         for (LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if (cb instanceof LifeCycleCallbacks.onResumeCallback) {
-                ((LifeCycleCallbacks.onResumeCallback) cb).onResume();
+            if (cb instanceof FragmentLifeCycleCallbacks.onResumeCallback) {
+                ((FragmentLifeCycleCallbacks.onResumeCallback) cb).onResume();
             }
         }
     }
@@ -134,8 +137,8 @@ public class FragmentModuleController extends CustomModuleController {
             return;
         }
         for (LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if (cb instanceof LifeCycleCallbacks.onPauseCallback) {
-                ((LifeCycleCallbacks.onPauseCallback) cb).onPause();
+            if (cb instanceof FragmentLifeCycleCallbacks.onPauseCallback) {
+                ((FragmentLifeCycleCallbacks.onPauseCallback) cb).onPause();
             }
         }
     }
@@ -145,8 +148,8 @@ public class FragmentModuleController extends CustomModuleController {
             return;
         }
         for (LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if (cb instanceof LifeCycleCallbacks.onStopCallback) {
-                ((LifeCycleCallbacks.onStopCallback) cb).onStop();
+            if (cb instanceof FragmentLifeCycleCallbacks.onStopCallback) {
+                ((FragmentLifeCycleCallbacks.onStopCallback) cb).onStop();
             }
         }
     }
@@ -156,8 +159,8 @@ public class FragmentModuleController extends CustomModuleController {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if(cb instanceof LifeCycleCallbacks.onDestroyViewCallback) {
-                ((LifeCycleCallbacks.onDestroyViewCallback) cb).onDestroyView();
+            if(cb instanceof FragmentLifeCycleCallbacks.onDestroyViewCallback) {
+                ((FragmentLifeCycleCallbacks.onDestroyViewCallback) cb).onDestroyView();
             }
         }
     }
@@ -166,8 +169,8 @@ public class FragmentModuleController extends CustomModuleController {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if (cb instanceof LifeCycleCallbacks.onDestroyCallback) {
-                ((LifeCycleCallbacks.onDestroyCallback) cb).onDestroy();
+            if (cb instanceof FragmentLifeCycleCallbacks.onDestroyCallback) {
+                ((FragmentLifeCycleCallbacks.onDestroyCallback) cb).onDestroy();
             }
         }
     }
@@ -177,16 +180,16 @@ public class FragmentModuleController extends CustomModuleController {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if(cb instanceof LifeCycleCallbacks.onDetachCallback) {
-                ((LifeCycleCallbacks.onDetachCallback) cb).onDetach();
+            if(cb instanceof FragmentLifeCycleCallbacks.onDetachCallback) {
+                ((FragmentLifeCycleCallbacks.onDetachCallback) cb).onDetach();
             }
         }
     }
 
     public void onConfigurationChanged(Configuration newConfig) {
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if(cb instanceof LifeCycleCallbacks.onConfigurationChangedCallback) {
-                ((LifeCycleCallbacks.onConfigurationChangedCallback) cb).onConfigurationChanged(newConfig);
+            if(cb instanceof FragmentLifeCycleCallbacks.onConfigurationChangedCallback) {
+                ((FragmentLifeCycleCallbacks.onConfigurationChangedCallback) cb).onConfigurationChanged(newConfig);
             }
         }
     }
@@ -207,8 +210,8 @@ public class FragmentModuleController extends CustomModuleController {
             return;
         }
         for(InstanceStateCallbacks.InstanceStateCallback cb: mInstanceStateCallbacks) {
-            if (cb instanceof InstanceStateCallbacks.onViewStateRestoredCallback) {
-                ((InstanceStateCallbacks.onViewStateRestoredCallback) cb).onViewStateRestored(savedInstanceState);
+            if (cb instanceof InstanceStateCallbacks.onRestoreInstanceStateCallback) {
+                ((InstanceStateCallbacks.onRestoreInstanceStateCallback) cb).onRestoreInstanceState(savedInstanceState);
             }
         }
     }
@@ -218,8 +221,8 @@ public class FragmentModuleController extends CustomModuleController {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if(cb instanceof LifeCycleCallbacks.onNewIntentCallback) {
-                ((LifeCycleCallbacks.onNewIntentCallback) cb).onNewIntent(intent);
+            if(cb instanceof FragmentLifeCycleCallbacks.onNewIntentCallback) {
+                ((FragmentLifeCycleCallbacks.onNewIntentCallback) cb).onNewIntent(intent);
             }
         }
     }
@@ -229,8 +232,8 @@ public class FragmentModuleController extends CustomModuleController {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if(cb instanceof LifeCycleCallbacks.onActivityResultCallback) {
-                ((LifeCycleCallbacks.onActivityResultCallback) cb).onActivityResultCallback(requestCode, resultCode, data);
+            if(cb instanceof FragmentLifeCycleCallbacks.onActivityResultCallback) {
+                ((FragmentLifeCycleCallbacks.onActivityResultCallback) cb).onActivityResult(requestCode, resultCode, data);
             }
         }
     }
@@ -263,7 +266,7 @@ public class FragmentModuleController extends CustomModuleController {
         }
         for(MenuCallbacks.MenuCallback cb : mMenuCallbacks) {
             if(cb instanceof MenuCallbacks.onOptionsItemSelectedCallback) {
-                if(((MenuCallbacks.onOptionsItemSelectedCallback) cb).onOptionsItemSelectedActivity(item)) {
+                if(((MenuCallbacks.onOptionsItemSelectedCallback) cb).onOptionsItemSelected(item)) {
                     return true;
                 }
             }

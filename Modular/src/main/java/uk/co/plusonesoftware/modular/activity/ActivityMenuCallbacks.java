@@ -13,28 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.plusonesoftware.modular.fragment;
+package uk.co.plusonesoftware.modular.activity;
 
-import android.os.Bundle;
+import android.view.Menu;
+
+import uk.co.plusonesoftware.modular.MenuCallbacks;
 
 /**
  * Created by James on 18/04/2014.
  */
-public class InstanceStateCallbacks {
+public class ActivityMenuCallbacks extends MenuCallbacks {
 
-    public interface InstanceStateCallback extends FragmentModuleController.FragmentCallback {
+    public interface ActivityMenuCallback extends MenuCallback, ActivityModuleController.ActivityCallback {
 
     }
 
-    public interface onSaveInstanceStateCallback {
-        public void onSaveInstanceState(Bundle outState);
-    }
-
-    public interface onViewStateRestoredCallback {
-        public void onViewStateRestored(Bundle savedInstanceState);
-    }
-
-    public interface persistInstanceStateCallback extends onSaveInstanceStateCallback, onViewStateRestoredCallback {
-
+    public interface onContextMenuClosedCallback extends ActivityMenuCallback {
+        void onContextMenuClosed(Menu menu);
     }
 }

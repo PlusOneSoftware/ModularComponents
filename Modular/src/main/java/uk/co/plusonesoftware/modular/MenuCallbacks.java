@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.plusonesoftware.modular.activity;
+package uk.co.plusonesoftware.modular;
 
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -25,7 +25,7 @@ import android.view.View;
  */
 public class MenuCallbacks {
 
-    public interface MenuCallback extends ActivityModuleController.ActivityCallback {
+    public interface MenuCallback extends ModuleController.ComponentCallback  {
 
     }
 
@@ -51,9 +51,5 @@ public class MenuCallbacks {
 
     public interface onContextItemSelectedCallback extends MenuCallback {
         boolean onContextItemSelected(MenuItem item);
-    }
-
-    public interface onContextMenuClosedCallback extends MenuCallback {
-        void onContextMenuClosed(Menu menu);
     }
 }

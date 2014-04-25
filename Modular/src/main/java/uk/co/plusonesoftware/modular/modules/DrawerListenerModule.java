@@ -19,7 +19,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Pair;
 import android.view.View;
 
-import uk.co.plusonesoftware.modular.CustomModuleController;
+import uk.co.plusonesoftware.modular.ModuleController;
 
 /**
  * Created by James on 22/04/2014.
@@ -31,9 +31,9 @@ public class DrawerListenerModule implements DrawerLayout.DrawerListener {
     public static final String onDrawerClosed = "DrawerLayout.DrawerListener.onDrawerClosed";
     public static final String onDrawerStateChanged = "DrawerLayout.DrawerListener.onDrawerStateChanged";
 
-    private CustomModuleController mController;
+    private ModuleController mController;
 
-    DrawerListenerModule(CustomModuleController controller, DrawerLayout drawer) {
+    DrawerListenerModule(ModuleController controller, DrawerLayout drawer) {
         mController = controller;
         mController.registerMethod(onDrawerSlide);
         mController.registerMethod(onDrawerOpened);

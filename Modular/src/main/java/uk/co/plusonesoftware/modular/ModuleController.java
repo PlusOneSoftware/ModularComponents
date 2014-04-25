@@ -23,17 +23,17 @@ import java.util.Map;
 /**
  * Created by James on 18/04/2014.
  */
-public abstract class CustomModuleController {
+public abstract class ModuleController {
 
     public interface ComponentCallback {
         // For known API methods
     }
 
-    public interface ModuleMethodCallback<T> {
+    public interface MethodCallback<T> {
         void trigger(T args);
     }
 
-    private Map<String, List<ModuleMethodCallback>> mMethods = new HashMap<String, List<ModuleMethodCallback>>();
+    private Map<String, List<MethodCallback>> mMethods = new HashMap<String, List<MethodCallback>>();
 
     public abstract void addCallbackListener(ComponentCallback cb);
 
@@ -45,7 +45,7 @@ public abstract class CustomModuleController {
      */
     public void registerMethod(String method) {
         if(!mMethods.containsKey(method)) {
-            mMethods.put(method, new ArrayList<ModuleMethodCallback>());
+            mMethods.put(method, new ArrayList<MethodCallback>());
         }
     }
 
@@ -64,11 +64,10 @@ public abstract class CustomModuleController {
      * @param <T> type of input
      * @return true if at least one callback listener was triggered
      */
-
     public <T> boolean trigger(String method, T args) {
         if(mMethods.containsKey(method)) {
-            final List<ModuleMethodCallback> callbacks = mMethods.get(method);
-            for(ModuleMethodCallback callback : callbacks) {
+            final List<MethodCallback> callbacks = mMethods.get(method);
+            for(MethodCallback callback : callbacks) {
                 callback.trigger(args);
             }
 
@@ -83,11 +82,11 @@ public abstract class CustomModuleController {
      * @param method method to add the callback to
      * @param callback the callback which will be called if the method is triggered
      */
-    public void addCallbackListener(String method, ModuleMethodCallback callback) {
+    public void addCallbackListener(String method, MethodCallback callback) {
         if(!mMethods.containsKey(method)) {
             registerMethod(method);
         }
-        final List<ModuleMethodCallback> callbacks = mMethods.get(method);
+        final List<MethodCallback> callbacks = mMethods.get(method);
         callbacks.add(callback);
     }
 
@@ -97,9 +96,9 @@ public abstract class CustomModuleController {
      * @param callback the callback to remove
      * @return true if callback was removed from the registered method
      */
-    public boolean removeCallbackListener(String method, ModuleMethodCallback callback) {
+    public boolean removeCallbackListener(String method, MethodCallback callback) {
         if(mMethods.containsKey(method)) {
-            final List<ModuleMethodCallback> callbacks = mMethods.get(method);
+            final List<MethodCallback> callbacks = mMethods.get(method);
             return callbacks.remove(callback);
         }
 

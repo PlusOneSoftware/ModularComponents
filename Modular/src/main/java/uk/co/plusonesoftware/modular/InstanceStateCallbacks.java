@@ -13,16 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package uk.co.plusonesoftware.modular.activity;
+package uk.co.plusonesoftware.modular;
 
 import android.os.Bundle;
+
+import uk.co.plusonesoftware.modular.activity.ActivityModuleController;
 
 /**
  * Created by James on 18/04/2014.
  */
 public class InstanceStateCallbacks {
 
-    public interface InstanceStateCallback extends ActivityModuleController.ActivityCallback {
+    public interface InstanceStateCallback extends ModuleController.ComponentCallback {
 
     }
 
@@ -30,6 +32,9 @@ public class InstanceStateCallbacks {
         public void onSaveInstanceState(Bundle outState);
     }
 
+    /**
+     * This is reused as onViewStateRestored for Fragments (params and return type are the same, just different names)
+     */
     public interface onRestoreInstanceStateCallback {
         public void onRestoreInstanceState(Bundle savedInstanceState);
     }

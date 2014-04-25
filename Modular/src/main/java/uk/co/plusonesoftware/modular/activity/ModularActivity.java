@@ -26,7 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import uk.co.plusonesoftware.modular.CustomModuleController;
+import uk.co.plusonesoftware.modular.ModuleController;
 
 /**
  * Created by James on 18/04/2014.
@@ -35,11 +35,11 @@ public class ModularActivity extends Activity implements FragmentCallbacks.onFra
 
     private ActivityModuleController mModule = new ActivityModuleController();
 
-    public void addCallbackListener(ActivityModuleController.ActivityCallback callback) {
+    public void addCallbackListener(ModuleController.ComponentCallback callback) {
         mModule.addCallbackListener(callback);
     }
 
-    public void addCallbackListener(String method, CustomModuleController.ModuleMethodCallback callback) {
+    public void addCallbackListener(String method, ModuleController.MethodCallback callback) {
         mModule.addCallbackListener(method, callback);
     }
 
@@ -47,7 +47,7 @@ public class ModularActivity extends Activity implements FragmentCallbacks.onFra
         mModule.removeCallbackListener(callback);
     }
 
-    public boolean removeCallbackListener(String method, CustomModuleController.ModuleMethodCallback callback) {
+    public boolean removeCallbackListener(String method, ModuleController.MethodCallback callback) {
         return mModule.removeCallbackListener(method, callback);
     }
 
@@ -96,7 +96,7 @@ public class ModularActivity extends Activity implements FragmentCallbacks.onFra
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        mModule.onPostResume(this);
+        mModule.onPostResume();
     }
 
     @Override

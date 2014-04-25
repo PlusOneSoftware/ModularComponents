@@ -15,7 +15,6 @@
  */
 package uk.co.plusonesoftware.modular.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -28,12 +27,15 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import uk.co.plusonesoftware.modular.CustomModuleController;
+import uk.co.plusonesoftware.modular.InstanceStateCallbacks;
+import uk.co.plusonesoftware.modular.ModuleController;
+import uk.co.plusonesoftware.modular.LifeCycleCallbacks;
+import uk.co.plusonesoftware.modular.MenuCallbacks;
 
 /**
  * Created by James on 18/04/2014.
  */
-public class ActivityModuleController extends CustomModuleController {
+public class ActivityModuleController extends ModuleController {
 
     public interface ActivityCallback extends ComponentCallback {
 
@@ -68,7 +70,7 @@ public class ActivityModuleController extends CustomModuleController {
             mSupportFragmentCallbacks.add((SupportFragmentCallbacks.SupportFragmentCallback) cb);
         }
 
-        if(cb instanceof MenuCallbacks.MenuCallback) {
+        if(cb instanceof ActivityMenuCallbacks.ActivityMenuCallback) {
             mMenuCallbacks.add((MenuCallbacks.MenuCallback) cb);
         }
     }
@@ -88,8 +90,8 @@ public class ActivityModuleController extends CustomModuleController {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if (cb instanceof LifeCycleCallbacks.onAttachedToWindowCallback) {
-                ((LifeCycleCallbacks.onAttachedToWindowCallback) cb).onAttachedToWindow();
+            if (cb instanceof ActivityLifeCycleCallbacks.onAttachedToWindowCallback) {
+                ((ActivityLifeCycleCallbacks.onAttachedToWindowCallback) cb).onAttachedToWindow();
             }
         }
     }
@@ -99,8 +101,8 @@ public class ActivityModuleController extends CustomModuleController {
             return;
         }
         for (LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if (cb instanceof LifeCycleCallbacks.onCreateCallback) {
-                ((LifeCycleCallbacks.onCreateCallback) cb).onCreate(savedInstanceState);
+            if (cb instanceof ActivityLifeCycleCallbacks.onCreateCallback) {
+                ((ActivityLifeCycleCallbacks.onCreateCallback) cb).onCreate(savedInstanceState);
             }
         }
     }
@@ -110,8 +112,8 @@ public class ActivityModuleController extends CustomModuleController {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if(cb instanceof LifeCycleCallbacks.onPostCreateCallback) {
-                ((LifeCycleCallbacks.onPostCreateCallback) cb).onPostCreate(savedInstanceState);
+            if(cb instanceof ActivityLifeCycleCallbacks.onPostCreateCallback) {
+                ((ActivityLifeCycleCallbacks.onPostCreateCallback) cb).onPostCreate(savedInstanceState);
             }
         }
     }
@@ -121,8 +123,8 @@ public class ActivityModuleController extends CustomModuleController {
             return;
         }
         for (LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if (cb instanceof LifeCycleCallbacks.onStartCallback) {
-                ((LifeCycleCallbacks.onStartCallback) cb).onStart();
+            if (cb instanceof ActivityLifeCycleCallbacks.onStartCallback) {
+                ((ActivityLifeCycleCallbacks.onStartCallback) cb).onStart();
             }
         }
     }
@@ -132,19 +134,19 @@ public class ActivityModuleController extends CustomModuleController {
             return;
         }
         for (LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if (cb instanceof LifeCycleCallbacks.onResumeCallback) {
-                ((LifeCycleCallbacks.onResumeCallback) cb).onResume();
+            if (cb instanceof ActivityLifeCycleCallbacks.onResumeCallback) {
+                ((ActivityLifeCycleCallbacks.onResumeCallback) cb).onResume();
             }
         }
     }
 
-    public void onPostResume(Activity activity) {
+    public void onPostResume() {
         if(mLifeCycleCallbacks.isEmpty()) {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if(cb instanceof LifeCycleCallbacks.onPostResumeCallback) {
-                ((LifeCycleCallbacks.onPostResumeCallback) cb).onPostResume();
+            if(cb instanceof ActivityLifeCycleCallbacks.onPostResumeCallback) {
+                ((ActivityLifeCycleCallbacks.onPostResumeCallback) cb).onPostResume();
             }
         }
     }
@@ -154,8 +156,8 @@ public class ActivityModuleController extends CustomModuleController {
             return;
         }
         for (LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if (cb instanceof LifeCycleCallbacks.onPauseCallback) {
-                ((LifeCycleCallbacks.onPauseCallback) cb).onPause();
+            if (cb instanceof ActivityLifeCycleCallbacks.onPauseCallback) {
+                ((ActivityLifeCycleCallbacks.onPauseCallback) cb).onPause();
             }
         }
     }
@@ -165,8 +167,8 @@ public class ActivityModuleController extends CustomModuleController {
             return;
         }
         for (LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if (cb instanceof LifeCycleCallbacks.onStopCallback) {
-                ((LifeCycleCallbacks.onStopCallback) cb).onStop();
+            if (cb instanceof ActivityLifeCycleCallbacks.onStopCallback) {
+                ((ActivityLifeCycleCallbacks.onStopCallback) cb).onStop();
             }
         }
     }
@@ -176,8 +178,8 @@ public class ActivityModuleController extends CustomModuleController {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if(cb instanceof LifeCycleCallbacks.onFinishCallback) {
-                ((LifeCycleCallbacks.onFinishCallback) cb).onFinish();
+            if(cb instanceof ActivityLifeCycleCallbacks.onFinishCallback) {
+                ((ActivityLifeCycleCallbacks.onFinishCallback) cb).onFinish();
             }
         }
     }
@@ -186,8 +188,8 @@ public class ActivityModuleController extends CustomModuleController {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if (cb instanceof LifeCycleCallbacks.onDestroyCallback) {
-                ((LifeCycleCallbacks.onDestroyCallback) cb).onDestroy();
+            if (cb instanceof ActivityLifeCycleCallbacks.onDestroyCallback) {
+                ((ActivityLifeCycleCallbacks.onDestroyCallback) cb).onDestroy();
             }
         }
     }
@@ -197,8 +199,8 @@ public class ActivityModuleController extends CustomModuleController {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if(cb instanceof LifeCycleCallbacks.onDetachedFromWindowCallback) {
-                ((LifeCycleCallbacks.onDetachedFromWindowCallback) cb).onDetachedFromWindow();
+            if(cb instanceof ActivityLifeCycleCallbacks.onDetachedFromWindowCallback) {
+                ((ActivityLifeCycleCallbacks.onDetachedFromWindowCallback) cb).onDetachedFromWindow();
             }
         }
     }
@@ -208,16 +210,16 @@ public class ActivityModuleController extends CustomModuleController {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if (cb instanceof LifeCycleCallbacks.onRestartCallback) {
-                ((LifeCycleCallbacks.onRestartCallback) cb).onRestart();
+            if (cb instanceof ActivityLifeCycleCallbacks.onRestartCallback) {
+                ((ActivityLifeCycleCallbacks.onRestartCallback) cb).onRestart();
             }
         }
     }
 
     public void onConfigurationChanged(Configuration newConfig) {
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if(cb instanceof LifeCycleCallbacks.onConfigurationChangedCallback) {
-                ((LifeCycleCallbacks.onConfigurationChangedCallback) cb).onConfigurationChanged( newConfig);
+            if(cb instanceof ActivityLifeCycleCallbacks.onConfigurationChangedCallback) {
+                ((ActivityLifeCycleCallbacks.onConfigurationChangedCallback) cb).onConfigurationChanged( newConfig);
             }
         }
     }
@@ -249,8 +251,8 @@ public class ActivityModuleController extends CustomModuleController {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if(cb instanceof LifeCycleCallbacks.onNewIntentCallback) {
-                ((LifeCycleCallbacks.onNewIntentCallback) cb).onNewIntent(intent);
+            if(cb instanceof ActivityLifeCycleCallbacks.onNewIntentCallback) {
+                ((ActivityLifeCycleCallbacks.onNewIntentCallback) cb).onNewIntent(intent);
             }
         }
     }
@@ -260,8 +262,8 @@ public class ActivityModuleController extends CustomModuleController {
             return;
         }
         for(LifeCycleCallbacks.LifeCycleCallback cb : mLifeCycleCallbacks) {
-            if(cb instanceof LifeCycleCallbacks.onActivityResultCallback) {
-                ((LifeCycleCallbacks.onActivityResultCallback) cb).onActivityResult(requestCode, resultCode, data);
+            if(cb instanceof ActivityLifeCycleCallbacks.onActivityResultCallback) {
+                ((ActivityLifeCycleCallbacks.onActivityResultCallback) cb).onActivityResult(requestCode, resultCode, data);
             }
         }
     }
@@ -338,8 +340,8 @@ public class ActivityModuleController extends CustomModuleController {
         }
         boolean out = false;
         for(MenuCallbacks.MenuCallback cb : mMenuCallbacks) {
-            if(cb instanceof MenuCallbacks.onCreateOptionsMenuCallback) {
-                out = out || ((MenuCallbacks.onCreateOptionsMenuCallback) cb).onCreateOptionsMenu(menu);
+            if(cb instanceof ActivityMenuCallbacks.onCreateOptionsMenuCallback) {
+                out = out || ((ActivityMenuCallbacks.onCreateOptionsMenuCallback) cb).onCreateOptionsMenu(menu);
             }
         }
         return out;
@@ -351,8 +353,8 @@ public class ActivityModuleController extends CustomModuleController {
         }
         boolean out = false;
         for(MenuCallbacks.MenuCallback cb : mMenuCallbacks) {
-            if(cb instanceof MenuCallbacks.onPrepareOptionsMenuCallback) {
-                out = out || ((MenuCallbacks.onPrepareOptionsMenuCallback) cb).onPrepareOptionsMenu(menu);
+            if(cb instanceof ActivityMenuCallbacks.onPrepareOptionsMenuCallback) {
+                out = out || ((ActivityMenuCallbacks.onPrepareOptionsMenuCallback) cb).onPrepareOptionsMenu(menu);
             }
         }
         return out;
@@ -363,8 +365,8 @@ public class ActivityModuleController extends CustomModuleController {
             return false;
         }
         for(MenuCallbacks.MenuCallback cb : mMenuCallbacks) {
-            if(cb instanceof MenuCallbacks.onOptionsItemSelectedCallback) {
-                if(((MenuCallbacks.onOptionsItemSelectedCallback) cb).onOptionsItemSelected(item)) {
+            if(cb instanceof ActivityMenuCallbacks.onOptionsItemSelectedCallback) {
+                if(((ActivityMenuCallbacks.onOptionsItemSelectedCallback) cb).onOptionsItemSelected(item)) {
                     return true;
                 }
             }
@@ -377,8 +379,8 @@ public class ActivityModuleController extends CustomModuleController {
             return;
         }
         for(MenuCallbacks.MenuCallback cb : mMenuCallbacks) {
-            if(cb instanceof MenuCallbacks.onOptionsMenuClosedCallback) {
-                ((MenuCallbacks.onOptionsMenuClosedCallback) cb).onOptionsMenuClosed(menu);
+            if(cb instanceof ActivityMenuCallbacks.onOptionsMenuClosedCallback) {
+                ((ActivityMenuCallbacks.onOptionsMenuClosedCallback) cb).onOptionsMenuClosed(menu);
             }
         }
     }
@@ -388,8 +390,8 @@ public class ActivityModuleController extends CustomModuleController {
             return;
         }
         for(MenuCallbacks.MenuCallback cb : mMenuCallbacks) {
-            if(cb instanceof MenuCallbacks.onCreateContextMenuCallback) {
-                ((MenuCallbacks.onCreateContextMenuCallback) cb).onCreateContextMenu(menu, v, menuInfo);
+            if(cb instanceof ActivityMenuCallbacks.onCreateContextMenuCallback) {
+                ((ActivityMenuCallbacks.onCreateContextMenuCallback) cb).onCreateContextMenu(menu, v, menuInfo);
             }
         }
     }
@@ -399,8 +401,8 @@ public class ActivityModuleController extends CustomModuleController {
             return false;
         }
         for(MenuCallbacks.MenuCallback cb : mMenuCallbacks) {
-            if(cb instanceof MenuCallbacks.onContextItemSelectedCallback) {
-                if(((MenuCallbacks.onContextItemSelectedCallback) cb).onContextItemSelected(item)) {
+            if(cb instanceof ActivityMenuCallbacks.onContextItemSelectedCallback) {
+                if(((ActivityMenuCallbacks.onContextItemSelectedCallback) cb).onContextItemSelected(item)) {
                     return true;
                 }
             }
@@ -413,8 +415,8 @@ public class ActivityModuleController extends CustomModuleController {
             return;
         }
         for(MenuCallbacks.MenuCallback cb : mMenuCallbacks) {
-            if(cb instanceof MenuCallbacks.onContextMenuClosedCallback) {
-                ((MenuCallbacks.onContextMenuClosedCallback) cb).onContextMenuClosed(menu);
+            if(cb instanceof ActivityMenuCallbacks.onContextMenuClosedCallback) {
+                ((ActivityMenuCallbacks.onContextMenuClosedCallback) cb).onContextMenuClosed(menu);
             }
         }
     }

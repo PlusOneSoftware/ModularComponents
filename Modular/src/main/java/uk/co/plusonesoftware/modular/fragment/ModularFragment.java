@@ -28,7 +28,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import uk.co.plusonesoftware.modular.CustomModuleController;
+import uk.co.plusonesoftware.modular.ModuleController;
 import uk.co.plusonesoftware.modular.activity.FragmentCallbacks;
 
 /**
@@ -39,19 +39,19 @@ public class ModularFragment extends Fragment {
 
     private FragmentModuleController mModule = new FragmentModuleController();
 
-    public void addCallbackListener(FragmentModuleController.FragmentCallback callback) {
+    public void addCallbackListener(ModuleController.ComponentCallback callback) {
         mModule.addCallbackListener(callback);
     }
 
-    public void addCallbackListener(String method, CustomModuleController.ModuleMethodCallback callback) {
+    public void addCallbackListener(String method, ModuleController.MethodCallback callback) {
         mModule.addCallbackListener(method, callback);
     }
 
-    public void removeCallbackListener(FragmentModuleController.FragmentCallback callback) {
+    public void removeCallbackListener(ModuleController.ComponentCallback callback) {
         mModule.removeCallbackListener(callback);
     }
 
-    public boolean removeCallbackListener(String method, CustomModuleController.ModuleMethodCallback callback) {
+    public boolean removeCallbackListener(String method, ModuleController.MethodCallback callback) {
         return mModule.removeCallbackListener(method, callback);
     }
 
