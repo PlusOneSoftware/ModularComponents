@@ -41,12 +41,12 @@ public class ActivityModuleController extends ModuleController {
 
     }
 
-    private List<LifeCycleCallbacks.LifeCycleCallback> mLifeCycleCallbacks = new ArrayList<LifeCycleCallbacks.LifeCycleCallback>();
-    private List<InstanceStateCallbacks.InstanceStateCallback> mInstanceStateCallbacks = new ArrayList<InstanceStateCallbacks.InstanceStateCallback>();
-    private List<UserInteractionCallbacks.UserInteractionCallback> mUserInteractionCallbacks = new ArrayList<UserInteractionCallbacks.UserInteractionCallback>();
-    private List<FragmentCallbacks.FragmentCallback> mFragmentCallbacks = new ArrayList<FragmentCallbacks.FragmentCallback>();
-    private List<SupportFragmentCallbacks.SupportFragmentCallback> mSupportFragmentCallbacks = new ArrayList<SupportFragmentCallbacks.SupportFragmentCallback>();
-    private List<MenuCallbacks.MenuCallback> mMenuCallbacks = new ArrayList<MenuCallbacks.MenuCallback>();
+    protected List<LifeCycleCallbacks.LifeCycleCallback> mLifeCycleCallbacks = new ArrayList<LifeCycleCallbacks.LifeCycleCallback>();
+    protected List<InstanceStateCallbacks.InstanceStateCallback> mInstanceStateCallbacks = new ArrayList<InstanceStateCallbacks.InstanceStateCallback>();
+    protected List<UserInteractionCallbacks.UserInteractionCallback> mUserInteractionCallbacks = new ArrayList<UserInteractionCallbacks.UserInteractionCallback>();
+    protected List<FragmentCallbacks.FragmentCallback> mFragmentCallbacks = new ArrayList<FragmentCallbacks.FragmentCallback>();
+    protected List<SupportFragmentCallbacks.SupportFragmentCallback> mSupportFragmentCallbacks = new ArrayList<SupportFragmentCallbacks.SupportFragmentCallback>();
+    protected List<MenuCallbacks.MenuCallback> mMenuCallbacks = new ArrayList<MenuCallbacks.MenuCallback>();
 
     @Override
     public void addCallbackListener(ComponentCallback cb) {
