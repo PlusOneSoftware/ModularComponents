@@ -32,7 +32,11 @@ import uk.co.plusonesoftware.modular.ModuleController;
  */
 public class ModularFragmentActivity extends FragmentActivity implements SupportFragmentCallbacks.onFragmentViewCreatedCallback {
 
-    private ActivityModuleController mModule = new ActivityModuleController();
+    private ActivityModuleController mModule = createModuleController();
+
+    protected ActivityModuleController createModuleController() {
+        return new ActivityModuleController();
+    }
 
     public void addCallbackListener(ModuleController.ComponentCallback callback) {
         mModule.addCallbackListener(callback);

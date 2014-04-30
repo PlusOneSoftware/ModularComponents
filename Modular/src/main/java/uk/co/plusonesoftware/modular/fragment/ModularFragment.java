@@ -37,7 +37,11 @@ import uk.co.plusonesoftware.modular.activity.FragmentCallbacks;
 @TargetApi(11)
 public class ModularFragment extends Fragment {
 
-    private FragmentModuleController mModule = new FragmentModuleController();
+    private FragmentModuleController mModule = createModuleController();
+
+    protected FragmentModuleController createModuleController() {
+        return new FragmentModuleController();
+    }
 
     public void addCallbackListener(ModuleController.ComponentCallback callback) {
         mModule.addCallbackListener(callback);
