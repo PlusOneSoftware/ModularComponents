@@ -70,7 +70,7 @@ public class ActivityModuleController extends ModuleController {
             mSupportFragmentCallbacks.add((SupportFragmentCallbacks.SupportFragmentCallback) cb);
         }
 
-        if(cb instanceof ActivityMenuCallbacks.ActivityMenuCallback) {
+        if(cb instanceof MenuCallbacks.MenuCallback) {
             mMenuCallbacks.add((MenuCallbacks.MenuCallback) cb);
         }
     }
