@@ -33,11 +33,11 @@ Again, you might be tempted to make a BaseDrawerToggleActivity, but you can't ex
 
 Instead, extend from `ModularActivity` or `ModularFragmentActivity`, and register an instance of each of these modules:
 
-    public class FacebookUiLifecycleModule extends UiLifeCycleHelper implements LifeCycleCallbacks.onCreateCallback, LifeCycleCallbacks.onResumeCallback, 
+    public class FacebookUiLifeCycleModule extends UiLifeCycleHelper implements LifeCycleCallbacks.onCreateCallback, LifeCycleCallbacks.onResumeCallback, 
              LifeCycleCallbacks.onActivityResultCallback, InstanceStateCallbacks.onSaveInstanceStateCallback, 
              LifeCycleCallbacks.onPauseCallback, LifeCycleCallbacks.onStopCallback, LifeCycleCallbacks.onDestroyCallback {
 
-        FacebookUiLifecycle(Activity activity, Session.StatusCallback callback) {
+        FacebookUiLifeCycleModule(Activity activity, Session.StatusCallback callback) {
             super(activity, callback);
         }
 
