@@ -13,6 +13,9 @@ import uk.co.plusonesoftware.modular.ModuleController;
  */
 public class ServiceModuleController extends ModuleController {
 
+    public interface ServiceCallback extends ComponentCallback {
+
+    }
     protected List<ServiceLifeCycleCallbacks.ServiceLifeCycleCallback> mLifeCycleCallbacks = new ArrayList<ServiceLifeCycleCallbacks.ServiceLifeCycleCallback>();
     protected List<ServiceBindCallbacks.ServiceBindCallback> mBindCallbacks = new ArrayList<ServiceBindCallbacks.ServiceBindCallback>();
     protected List<ServiceMiscCallbacks.ServiceMiscCallback> mMiscCallbacks = new ArrayList<ServiceMiscCallbacks.ServiceMiscCallback>();

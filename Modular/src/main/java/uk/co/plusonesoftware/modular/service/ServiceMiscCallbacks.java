@@ -8,7 +8,7 @@ import uk.co.plusonesoftware.modular.ModuleController;
  * Created by James on 01/05/2014.
  */
 public class ServiceMiscCallbacks {
-    public interface ServiceMiscCallback extends ModuleController.ComponentCallback {
+    public interface ServiceMiscCallback extends ServiceModuleController.ServiceCallback {
 
     }
 

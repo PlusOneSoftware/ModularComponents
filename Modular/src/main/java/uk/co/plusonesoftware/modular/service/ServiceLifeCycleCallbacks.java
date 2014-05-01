@@ -7,7 +7,7 @@ import android.content.res.Configuration;
  * Created by James on 01/05/2014.
  */
 public class ServiceLifeCycleCallbacks {
-    public interface ServiceLifeCycleCallback {
+    public interface ServiceLifeCycleCallback extends ServiceModuleController.ServiceCallback {
 
     }
 

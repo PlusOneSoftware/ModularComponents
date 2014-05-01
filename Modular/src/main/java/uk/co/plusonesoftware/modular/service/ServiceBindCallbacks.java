@@ -8,7 +8,7 @@ import uk.co.plusonesoftware.modular.ModuleController;
  * Created by James on 01/05/2014.
  */
 public class ServiceBindCallbacks {
-    public interface ServiceBindCallback extends ModuleController.ComponentCallback {
+    public interface ServiceBindCallback extends ServiceModuleController.ServiceCallback {
 
     }
 
