@@ -22,7 +22,7 @@ Add it to your `build.gradle`:
         compile 'com.github.plusonesoftware:modular:X.Y.Z'
     }
 
-Where X.Y.Z is the latest version, currently `0.1.0`
+Where X.Y.Z is the latest version, currently `0.2.0`
 
 Example
 ------
