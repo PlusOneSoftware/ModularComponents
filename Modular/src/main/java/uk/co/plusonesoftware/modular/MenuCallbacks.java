@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 /**
+ * Menu callbacks common between Activities and Fragments
  * Created by James on 18/04/2014.
  */
 public class MenuCallbacks {
@@ -51,5 +52,9 @@ public class MenuCallbacks {
 
     public interface onContextItemSelectedCallback extends MenuCallback {
         boolean onContextItemSelected(MenuItem item);
+    }
+
+    public interface allCallbacks extends onCreateOptionsMenuCallback, onPrepareOptionsMenuCallback, onOptionsItemSelectedCallback, onOptionsMenuClosedCallback, onCreateContextMenuCallback, onContextItemSelectedCallback {
+
     }
 }

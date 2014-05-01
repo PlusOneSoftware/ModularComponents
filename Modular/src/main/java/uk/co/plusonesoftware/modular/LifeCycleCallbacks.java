@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 
 /**
+ * Life cycle callbacks common between Activities and Fragments
  * Created by James on 24/04/2014.
  */
 public class LifeCycleCallbacks {
@@ -56,4 +57,7 @@ public class LifeCycleCallbacks {
 
     }
 
+    public interface allCallbacks extends focusedCallback, visibleCallback, activeCallback, onConfigurationChangedCallback, onActivityResultCallback {
+
+    }
 }

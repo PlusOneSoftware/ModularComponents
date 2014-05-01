@@ -35,4 +35,8 @@ public class FragmentCallbacks {
     public interface onFragmentViewCreatedCallback extends FragmentCallback {
         void onFragmentViewCreated(Fragment fragment, View view, Bundle savedInstanceState);
     }
+
+    public interface allCallbacks extends onAttachFragmentCallback, onFragmentViewCreatedCallback {
+
+    }
 }

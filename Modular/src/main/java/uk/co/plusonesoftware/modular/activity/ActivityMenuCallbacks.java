@@ -31,4 +31,8 @@ public class ActivityMenuCallbacks extends MenuCallbacks {
     public interface onContextMenuClosedCallback extends ActivityMenuCallback {
         void onContextMenuClosed(Menu menu);
     }
+
+    public interface allCallbacks extends MenuCallbacks.allCallbacks, onContextMenuClosedCallback {
+
+    }
 }

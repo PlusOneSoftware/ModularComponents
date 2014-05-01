@@ -35,4 +35,8 @@ public class UserInteractionCallbacks {
     public interface onUserLeaveHintCallback extends UserInteractionCallback {
         void onUserLeaveHintCallback();
     }
+
+    public interface allCallbacks extends onBackPressedCallback, onUserInteractionCallback, onUserLeaveHintCallback {
+
+    }
 }

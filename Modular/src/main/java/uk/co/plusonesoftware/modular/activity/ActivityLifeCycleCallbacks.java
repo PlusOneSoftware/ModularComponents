@@ -60,4 +60,8 @@ public class ActivityLifeCycleCallbacks extends LifeCycleCallbacks {
     public interface attachedCallback extends onAttachedToWindowCallback, onDetachedFromWindowCallback {
 
     }
+
+    public interface allCallbacks extends LifeCycleCallbacks.allCallbacks, onPostCreateCallback, onPostResumeCallback, onFinishCallback, onRestartCallback, onNewIntentCallback, attachedCallback {
+
+    }
 }
