@@ -1,14 +1,14 @@
 ModularComponents
 =================
 
-Modular Activities &amp; Fragments for Android - for composition over inheritance
+Modular Activities, Fragments &amp; Services for Android - for composition over inheritance
 
-Say you have a component which requires hooking into various activity / fragment life-cycle callbacks.
-Create a module and register it with an Activity / Fragment which has the corresponding `CustomModuleController` (`ActivityModuleController` and `FragmentModuleController`) setup to avoid code duplication.
+Say you have a component which requires hooking into various activity / fragment / service life-cycle callbacks.
+Create a module and register it with an Activity / Fragment / Service which has the corresponding `ModuleController` (`ActivityModuleController`, `FragmentModuleController` and `ServiceModuleController`) setup to avoid code duplication.
 
-`ModularActivity`, `ModularFragmentActivity`, `ModularFragment` and `ModularSupportFragment` are provided in the library to extend from.
+`ModularActivity`, `ModularFragmentActivity`, `ModularFragment`, `ModularSupportFragment`, `ModularService` and `ModularIntentService` are provided in the library to extend from.
 
-`CustomModuleController` (which the Activity and Fragment controllers extends from) also provides a way to register callbacks to custom events.
+`ModuleController`s also provide a way to register callbacks to custom events.
 
 Use
 -----
@@ -185,6 +185,75 @@ Then in your activity, you can `addCallbackListener`s (multiple callbacks for th
     }
     
     
+Expanding
+----
+You can extend on top of ModularComponents to expand the events that it can handle.
+As an example, we're going to implement a call back for `Activity.onTitleChanged(CharSequence title, int color)` 
+
+Firstly, you'll need to define a new interface:
+    
+    class ActivityContentChangedCallbacks {
+        public interface ActivityContentChangedCallback extends ActivityModuleController.ActivityCallback {
+        }
+
+        public interface onTitleChangedCallback extends ActivityContentChangedCallback {
+            void onTitleChanged(CharSequence title, int colour);
+        }
+    }
+
+Since the title changing doesn't really tie into the other activity callbacks group, we've made a new group of interfaces named `ActivityContentChangedCallback`, which is based off the common `ActivityCallback`, which in turn is a `ComponentCallback` (the base interface that `ModuleController` cares about).
+
+Now we need to extend `AcitivtyModuleController` so that it knows how to handle it.
+
+     public class ExtendedActivityModuleController extends ActivityModuleController {
+    
+        List<ActivityContentChangedCallbacks.ActivityContentChangedCallback> mContentChangedCallbacks 
+                 = new ArrayList<ActivityContentChangedCallbacks.ActivityContentChangedCallback>();
+    
+        @Override
+        public void addCallbackListener(ComponentCallback cb) {
+            if(cb instanceof ActivityContentChangedCallbacks.ActivityContentChangedCallback) {
+                mContentChangedCallbacks.add((ActivityContentChangedCallbacks.ActivityContentChangedCallback) cb);
+            }
+    
+            super.addCallbackListener(cb);
+        }
+    
+        @Override
+        public void removeCallbackListener(ComponentCallback cb) {
+            mContentChangedCallbacks.remove(cb);
+            super.removeCallbackListener(cb);
+        }
+    
+        public void onTitleChanged(CharSequence title, int colour) {
+            if(mContentChangedCallbacks.isEmpty()) {
+                return;
+            }
+    
+            for(ActivityContentChangedCallbacks.ActivityContentChangedCallback cb : mContentChangedCallbacks) {
+                if(cb instanceof ActivityContentChangedCallbacks.onTitleChangedCallback) {
+                    ((ActivityContentChangedCallbacks.onTitleChangedCallback) cb).onTitleChanged(title, colour);
+                }
+            }
+        }
+
+The new `List`, overriding `addCallbackListener` and `removeCallbackListener` can be avoided if we reuse one of the existing interface groups.
+
+Lastly, we need to instantiate the new version of the controller, and have the Activity tell it when the title changes. If you're extending from one of the ModularActivities, you can override `createModuleController`
+
+    public class BaseActivity extends ModularActivity {
+
+        @Override
+        protected ActivityModuleController createModuleController() {
+            return new ExtendedActivityModuleController();
+        }
+    
+        @Override
+        protected void onTitleChanged(CharSequence title, int colour) {
+            super.onTitleChanged(title, color);
+            getModuleController().onTitleChanged(title, colour);
+        }
+    }
 License
 ----
 
