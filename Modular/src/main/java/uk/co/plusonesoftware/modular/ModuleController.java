@@ -82,6 +82,7 @@ public abstract class ModuleController {
      * @param <T> type of input
      * @return true if at least one callback listener was triggered
      */
+    @SuppressWarnings("unchecked")
     public <T> boolean trigger(String method, T args) {
         if(mMethods.containsKey(method)) {
             final List<MethodCallback> callbacks = mMethods.get(method);
