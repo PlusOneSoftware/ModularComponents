@@ -30,7 +30,7 @@ import uk.co.plusonesoftware.modular.ModuleController;
 /**
  * Created by James on 18/04/2014.
  */
-public class ModularFragmentActivity extends FragmentActivity implements SupportFragmentCallbacks.onFragmentViewCreatedCallback {
+public class ModularFragmentActivity extends FragmentActivity implements ModuleController.ModularComponent, SupportFragmentCallbacks.onFragmentViewCreatedCallback {
 
     private ActivityModuleController mModule = createModuleController();
 
@@ -38,31 +38,38 @@ public class ModularFragmentActivity extends FragmentActivity implements Support
         return new ActivityModuleController();
     }
 
+    @Override
     public void addCallbackListener(ModuleController.ComponentCallback callback) {
         mModule.addCallbackListener(callback);
     }
 
+    @Override
     public void addCallbackListener(String method, ModuleController.MethodCallback callback) {
         mModule.addCallbackListener(method, callback);
     }
 
-    public void removeCallbackListener(ActivityModuleController.ActivityCallback callback) {
+    @Override
+    public void removeCallbackListener(ModuleController.ComponentCallback callback) {
         mModule.removeCallbackListener(callback);
     }
 
+    @Override
     public boolean removeCallbackListener(String method, ModuleController.MethodCallback callback) {
         return mModule.removeCallbackListener(method, callback);
     }
 
+    @Override
     public void registerMethod(String method) {
         mModule.registerMethod(method);
     }
 
+    @Override
     public void removeMethod(String method) {
         mModule.removeMethod(method);
     }
 
-    public ActivityModuleController getModuleController() {
+    @Override
+    public ModuleController getModuleController() {
         return mModule;
     }
 

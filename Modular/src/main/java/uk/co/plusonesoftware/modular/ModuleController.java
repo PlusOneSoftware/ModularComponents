@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import uk.co.plusonesoftware.modular.activity.ActivityModuleController;
+
 /**
  * Created by James on 18/04/2014.
  */
@@ -31,6 +33,22 @@ public abstract class ModuleController {
 
     public interface MethodCallback<T> {
         void trigger(T args);
+    }
+
+    public interface ModularComponent {
+        void addCallbackListener(ModuleController.ComponentCallback callback);
+
+        void addCallbackListener(String method, ModuleController.MethodCallback callback);
+
+        void removeCallbackListener(ModuleController.ComponentCallback callback);
+
+        boolean removeCallbackListener(String method, ModuleController.MethodCallback callback);
+
+        void registerMethod(String method);
+
+        void removeMethod(String method);
+
+        ModuleController getModuleController();
     }
 
     private Map<String, List<MethodCallback>> mMethods = new HashMap<String, List<MethodCallback>>();
