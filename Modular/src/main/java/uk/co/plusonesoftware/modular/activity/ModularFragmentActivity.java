@@ -181,6 +181,12 @@ public class ModularFragmentActivity extends FragmentActivity implements Support
     }
 
     @Override
+    protected void onUserLeaveHint() {
+        super.onUserLeaveHint();
+        mModule.onUserLeaveHint();
+    }
+
+    @Override
     public void onAttachFragment(Fragment fragment) {
         super.onAttachFragment(fragment);
         mModule.onAttachFragment(fragment);

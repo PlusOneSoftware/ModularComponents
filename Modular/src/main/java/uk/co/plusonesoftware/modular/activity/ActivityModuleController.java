@@ -290,6 +290,17 @@ public class ActivityModuleController extends ModuleController {
         }
     }
 
+    public void onUserLeaveHint() {
+        if(mUserInteractionCallbacks.isEmpty()) {
+            return;
+        }
+        for(UserInteractionCallbacks.UserInteractionCallback cb : mUserInteractionCallbacks) {
+            if(cb instanceof UserInteractionCallbacks.onUserLeaveHintCallback) {
+                ((UserInteractionCallbacks.onUserLeaveHintCallback) cb).onUserLeaveHintCallback();
+            }
+        }
+    }
+
     public void onAttachFragment(Fragment fragment) {
         if(mSupportFragmentCallbacks.isEmpty()) {
             return;

@@ -31,4 +31,8 @@ public class UserInteractionCallbacks {
     public interface onUserInteractionCallback extends UserInteractionCallback {
         void onUserInteraction();
     }
+
+    public interface onUserLeaveHintCallback extends UserInteractionCallback {
+        void onUserLeaveHintCallback();
+    }
 }

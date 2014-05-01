@@ -181,6 +181,12 @@ public class ModularActivity extends Activity implements FragmentCallbacks.onFra
         mModule.onUserInteraction();
     }
 
+    @Override
+    protected void onUserLeaveHint() {
+        super.onUserLeaveHint();
+        mModule.onUserLeaveHint();
+    }
+
     @TargetApi(11)
     @Override
     public void onAttachFragment(Fragment fragment) {
