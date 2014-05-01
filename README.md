@@ -10,6 +10,20 @@ Create a module and register it with an Activity / Fragment which has the corres
 
 `CustomModuleController` (which the Activity and Fragment controllers extends from) also provides a way to register callbacks to custom events.
 
+Use
+-----
+Add it to your `build.gradle`:
+
+    dependencies {
+        repositories {
+            mavenCentral()
+        }
+
+        compile 'com.github.plusonesoftware:modular:X.Y.Z'
+    }
+
+Where X.Y.Z is the latest version, currently `0.1.0`
+
 Example
 ------
 Facebook's `UiLifeCycleHelper` requires you to override `onCreate`, `onResume`, `onActivityResult`, `onSaveInstanceState`, `onPause`, `onStop` and `onDestroy`. If you have multiple Activities that interface with the Facebook SDK, you might be tempted to make a BaseFacebookActivity that does this, and then extend from it for each of the Activities.
