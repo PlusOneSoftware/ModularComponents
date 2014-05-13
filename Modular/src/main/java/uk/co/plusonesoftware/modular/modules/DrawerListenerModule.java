@@ -32,6 +32,7 @@ public class DrawerListenerModule implements DrawerLayout.DrawerListener {
     public static final String onDrawerStateChanged = "DrawerLayout.DrawerListener.onDrawerStateChanged";
 
     private ModuleController mController;
+    private onDrawerSlideParams mOnDrawerSlideParams = new onDrawerSlideParams();
 
     DrawerListenerModule(ModuleController controller, DrawerLayout drawer) {
         mController = controller;
@@ -44,7 +45,9 @@ public class DrawerListenerModule implements DrawerLayout.DrawerListener {
 
     @Override
     public void onDrawerSlide(View drawerView, float slideOffset) {
-        mController.trigger(onDrawerSlide, Pair.create(drawerView, slideOffset));
+        mOnDrawerSlideParams.drawerView = drawerView;
+        mOnDrawerSlideParams.slideOffset = slideOffset;
+        mController.trigger(onDrawerSlide, mOnDrawerSlideParams);
     }
 
     @Override
@@ -60,5 +63,42 @@ public class DrawerListenerModule implements DrawerLayout.DrawerListener {
     @Override
     public void onDrawerStateChanged(int newState) {
         mController.trigger(onDrawerStateChanged, newState);
+    }
+
+    public static class onDrawerSlideParams {
+        public View drawerView;
+        public float slideOffset;
+    }
+
+    public void registerListener(DrawerLayout.DrawerListener listener) {
+        registerListener(mController, listener);
+    }
+
+    public static void registerListener(ModuleController controller, final DrawerLayout.DrawerListener listener) {
+        ModuleController.MethodCallback cb = new ModuleController.MethodCallback() {
+            @Override
+            public void trigger(String methodName, Object args) {
+                if(onDrawerSlide.equals(methodName)) {
+                    onDrawerSlideParams params = (onDrawerSlideParams) args;
+                    listener.onDrawerSlide(params.drawerView, params.slideOffset);
+                }
+                else if(onDrawerStateChanged.equals(methodName)) {
+                    listener.onDrawerStateChanged((Integer) args);
+                }
+                else {
+                    View view = (View) args;
+                    if(onDrawerOpened.equals(methodName)) {
+                        listener.onDrawerOpened(view);
+                    }
+                    else if(onDrawerClosed.equals(methodName)) {
+                        listener.onDrawerClosed(view);
+                    }
+                }
+            }
+        };
+        controller.addCallbackListener(onDrawerSlide, cb);
+        controller.addCallbackListener(onDrawerOpened, cb);
+        controller.addCallbackListener(onDrawerClosed, cb);
+        controller.addCallbackListener(onDrawerStateChanged, cb);
     }
 }

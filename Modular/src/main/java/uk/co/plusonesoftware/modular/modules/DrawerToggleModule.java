@@ -15,51 +15,35 @@
  */
 package uk.co.plusonesoftware.modular.modules;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Pair;
-import android.view.View;
 
 import uk.co.plusonesoftware.modular.ModuleController;
 import uk.co.plusonesoftware.modular.activity.ActivityLifeCycleCallbacks;
 import uk.co.plusonesoftware.modular.activity.ActivityMenuCallbacks;
-import uk.co.plusonesoftware.modular.activity.ModularActivity;
 
 /**
  * Created by James on 22/04/2014.
  */
 public class DrawerToggleModule extends ActionBarDrawerToggle implements ActivityLifeCycleCallbacks.onPostCreateCallback, ActivityLifeCycleCallbacks.onConfigurationChangedCallback, ActivityMenuCallbacks.onOptionsItemSelectedCallback {
 
-    public DrawerToggleModule(ModularActivity activity, DrawerLayout drawer, int icon, int open, int close) {
+    public DrawerToggleModule(Activity activity, DrawerLayout drawer, int icon, int open, int close) {
         super(activity, drawer, icon, open, close);
-        activity.addCallbackListener(DrawerListenerModule.onDrawerSlide, new ModuleController.MethodCallback<Pair<View, Float>>() {
-            @Override
-            public void trigger(Pair<View, Float> args) {
-                onDrawerSlide(args.first, args.second);
-            }
-        });
-        activity.addCallbackListener(DrawerListenerModule.onDrawerOpened, new ModuleController.MethodCallback<View>() {
-            @Override
-            public void trigger(View args) {
-                onDrawerOpened(args);
-            }
-        });
-        activity.addCallbackListener(DrawerListenerModule.onDrawerClosed, new ModuleController.MethodCallback<View>() {
-            @Override
-            public void trigger(View args) {
-                onDrawerClosed(args);
-            }
-        });
-        activity.addCallbackListener(DrawerListenerModule.onDrawerStateChanged, new ModuleController.MethodCallback<Integer>() {
-            @Override
-            public void trigger(Integer args) {
-                onDrawerStateChanged(args);
-            }
-        });
+        if(activity instanceof ModuleController.ModularComponent) {
+            DrawerListenerModule.registerListener(((ModuleController.ModularComponent) activity).getModuleController(), this);
+        }
     }
 
-    //// ActionBarDrawerToggler doesn't have a onPostCreate method, so we override it to provide the correct implementation
+    public DrawerToggleModule(ModuleController controller, Activity activity, DrawerLayout drawer, int icon, int open, int close) {
+        super(activity, drawer, icon, open, close);
+        if(controller != null) {
+            DrawerListenerModule.registerListener(controller, this);
+        }
+    }
+
+        //// ActionBarDrawerToggler doesn't have a onPostCreate method, so we override it to provide the correct implementation
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
         syncState();

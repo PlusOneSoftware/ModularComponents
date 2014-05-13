@@ -32,7 +32,7 @@ public abstract class ModuleController {
     }
 
     public interface MethodCallback<T> {
-        void trigger(T args);
+        void trigger(String methodName, T args);
     }
 
     public interface ModularComponent {
@@ -87,7 +87,7 @@ public abstract class ModuleController {
         if(mMethods.containsKey(method)) {
             final List<MethodCallback> callbacks = mMethods.get(method);
             for(MethodCallback callback : callbacks) {
-                callback.trigger(args);
+                callback.trigger(method, args);
             }
 
             return !callbacks.isEmpty();
