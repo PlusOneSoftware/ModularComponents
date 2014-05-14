@@ -19,10 +19,8 @@ Add it to your `build.gradle`:
             mavenCentral()
         }
 
-        compile 'com.github.plusonesoftware:modular:X.Y.Z'
+        compile 'com.github.plusonesoftware:modular:0.3.0'
     }
-
-Where X.Y.Z is the latest version, currently `0.3.0`
 
 Example
 ------
