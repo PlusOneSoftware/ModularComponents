@@ -82,15 +82,16 @@ In the example above, our `DrawerToggleModule` registers itself as the `DrawerLi
 Using Custom Method Callbacks, you could instead use this class:
 
     public class DrawerListenerModule implements DrawerLayout.DrawerListener {
-
-        public static final String onDrawerSlide = "onDrawerSlide";
-        public static final String onDrawerOpened = "onDrawerOpened";
-        public static final String onDrawerClosed = "onDrawerClosed";
-        public static final String onDrawerStateChanged = "onDrawerStateChanged";
     
-        private CustomModuleController mController;
+        public static final String onDrawerSlide = "DrawerLayout.DrawerListener.onDrawerSlide";
+        public static final String onDrawerOpened = "DrawerLayout.DrawerListener.onDrawerOpened";
+        public static final String onDrawerClosed = "DrawerLayout.DrawerListener.onDrawerClosed";
+        public static final String onDrawerStateChanged = "DrawerLayout.DrawerListener.onDrawerStateChanged";
     
-        DrawerListenerModule(CustomModuleController controller, DrawerLayout drawer) {
+        private final ModuleController mController;
+        private final onDrawerSlideParams mOnDrawerSlideParams = new onDrawerSlideParams();
+    
+        public DrawerListenerModule(ModuleController controller, DrawerLayout drawer) {
             mController = controller;
             mController.registerMethod(onDrawerSlide);
             mController.registerMethod(onDrawerOpened);
@@ -101,8 +102,9 @@ Using Custom Method Callbacks, you could instead use this class:
     
         @Override
         public void onDrawerSlide(View drawerView, float slideOffset) {
-            // Creating a Pair here isn't a great idea (this will be called lots of times).
-            mController.trigger(onDrawerSlide, Pair.create(drawerView, slideOffset));
+            mOnDrawerSlideParams.drawerView = drawerView;
+            mOnDrawerSlideParams.slideOffset = slideOffset;
+            mController.trigger(onDrawerSlide, mOnDrawerSlideParams);
         }
     
         @Override
@@ -119,40 +121,64 @@ Using Custom Method Callbacks, you could instead use this class:
         public void onDrawerStateChanged(int newState) {
             mController.trigger(onDrawerStateChanged, newState);
         }
+    
+        public static class onDrawerSlideParams {
+            public View drawerView;
+            public float slideOffset;
+        }
+    
+        public void registerListener(DrawerLayout.DrawerListener listener) {
+            registerListener(mController, listener);
+        }
+    
+        public static void registerListener(ModuleController controller, final DrawerLayout.DrawerListener listener) {
+            ModuleController.MethodCallback cb = new ModuleController.MethodCallback() {
+                @Override
+                public void trigger(String methodName, Object args) {
+                    if(onDrawerSlide.equals(methodName)) {
+                        onDrawerSlideParams params = (onDrawerSlideParams) args;
+                        listener.onDrawerSlide(params.drawerView, params.slideOffset);
+                    }
+                    else if(onDrawerStateChanged.equals(methodName)) {
+                        listener.onDrawerStateChanged((Integer) args);
+                    }
+                    else {
+                        View view = (View) args;
+                        if(onDrawerOpened.equals(methodName)) {
+                            listener.onDrawerOpened(view);
+                        }
+                        else if(onDrawerClosed.equals(methodName)) {
+                            listener.onDrawerClosed(view);
+                        }
+                    }
+                }
+            };
+            controller.addCallbackListener(onDrawerSlide, cb);
+            controller.addCallbackListener(onDrawerOpened, cb);
+            controller.addCallbackListener(onDrawerClosed, cb);
+            controller.addCallbackListener(onDrawerStateChanged, cb);
+        }
     }
 
-and a modified version of the above DrawerToggleModule:
+We provide a new constructor in DrawerToggleModule:
 
-    public class DrawerToggleModule extends ActionBarDrawerToggle implements LifeCycleCallbacks.onPostCreateCallback, LifeCycleCallbacks.onConfigurationChangedCallback, MenuCallbacks.onOptionsItemSelectedCallback {
-
-        public DrawerToggleModule(ModularActivity activity, DrawerLayout drawer, int icon, int open, int close) {
+    public class DrawerToggleModule extends ActionBarDrawerToggle implements ActivityLifeCycleCallbacks.onPostCreateCallback, ActivityLifeCycleCallbacks.onConfigurationChangedCallback, ActivityMenuCallbacks.onOptionsItemSelectedCallback {
+    
+        public DrawerToggleModule(Activity activity, DrawerLayout drawer, int icon, int open, int close) {
             super(activity, drawer, icon, open, close);
-            activity.addCallbackListener(DrawerListenerModule.onDrawerSlide, new CustomModuleController.ModuleMethodCallback<Pair<View, Float>>() {
-                @Override
-                public void trigger(Pair<View, Float> args) {
-                    onDrawerSlide(args.first, args.second);
-                }
-            });
-            activity.addCallbackListener(DrawerListenerModule.onDrawerOpened, new CustomModuleController.ModuleMethodCallback<View>() {
-                @Override
-                public void trigger(View args) {
-                    onDrawerOpened(args);
-                }
-            });
-            activity.addCallbackListener(DrawerListenerModule.onDrawerClosed, new CustomModuleController.ModuleMethodCallback<View>() {
-                @Override
-                public void trigger(View args) {
-                    onDrawerClosed(args);
-                }
-            });
-            activity.addCallbackListener(DrawerListenerModule.onDrawerStateChanged, new CustomModuleController.ModuleMethodCallback<Integer>() {
-                @Override
-                public void trigger(Integer args) {
-                    onDrawerStateChanged(args);
-                }
-            });
+            drawer.setDrawerListener(this);
         }
-
+    
+        public DrawerToggleModule(Activity activity, DrawerLayout drawer, int icon, int open, int close, ModuleController controller) {
+            super(activity, drawer, icon, open, close);
+            controller.addCallbackListener(this);
+    
+            // Create the DrawerListenerModule, it will now handle the onDrawerListener events and broadcast them through the ModularComponent as custom callbacks
+            DrawerListenerModule listenerModule = new DrawerListenerModule(controller, drawer);
+            // The registerListener helper method can be used to subscribe an instance of the normal onDrawerListener interface
+            listenerModule.registerListener(this); // Could also be done statically when we know the ModuleController: DrawerListenerModule.registerListener(controller, drawerModule);
+    
+        }
         //// ActionBarDrawerToggler doesn't have a onPostCreate method, so we override it to provide the correct implementation
         @Override
         public void onPostCreate(Bundle savedInstanceState) {
@@ -160,29 +186,55 @@ and a modified version of the above DrawerToggleModule:
         }
     }
 
+
 Then in your activity, you can `addCallbackListener`s (multiple callbacks for the same methods) to the methods you're interested in:
 
     public class LoginActivity extends ModularFragmentActivity {
         @Override
         protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(...);
             ...
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer);
             addCallbackListener(new FacebookUiLifecycle());
-            // setup the DrawerListener and register the methods, this has to be created before the DrawerToggle so that it's callbacks are registered to the methods
-            DrawerListenerModule module = new DrawerListenerModule(getModuleController(), drawer);
-            addCallbackListener(new DrawerToggle(this, drawer, R.id.ic_icon, R.string.open, R.string.close);
-            addCallbackListener(DrawerListenerModule.onDrawerSlide, new CustomModuleController.ModuleMethodCallback<Pair<View, Float>>() {
+
+            // Use of this constructor will add itself as a callback listener to the controller we give it
+            new DrawerToggleModule(this, drawer, R.id.ic_icon, R.string.open, R.string.close, getModuleController());
+
+            // We can register for the specific custom callbacks we care about:
+            addCallbackListener(DrawerListenerModule.onDrawerSlide, new ModuleController.MethodCallback<DrawerListenerModule.onDrawerSlideParams>() {
                 @Override
-                public void trigger(Pair<View, Float> args) {
+                public void trigger(String method, DrawerListenerModule.onDrawerSlideParams args) {
                     // do something cool as the menu slides
                 }
-            });            
+            });
+            // Or use one callback for multiple methods:
+            ModuleController.MethodCallback<View> callback = new ModuleController.MethodCallback<View>() {
+                @Override
+                public void trigger(String methodName, View args) {
+                    if(DrawerListenerModule.onDrawerOpened.equals(methodName)) {
+                        // do something when the drawer is fully opened
+                    }
+                    else if(DrawerListenerModule.onDrawerClosed.equals(methodName)) {
+                        // do something when the drawer is fully closed
+                    }
+                }
+            };
+            addCallbackListener(DrawerListenerModule.onDrawerOpened, callback);
+            addCallbackListener(DrawerListenerModule.onDrawerClosed, callback);
             ...
         }
     ...
     }
     
-    
+ Gists
+----
+As use cases for ModularComponents are identified, I will be updating this library with helpful Modules (like DrawerListenerModule and DrawerToggleModule). 
+
+To keep the number of dependencies of this library to a minimum, if a Module requires external source (e.g. FacebookUiLifeCycleModule), this section will be updated with links to gists that can be used if you're using the corresponding external library.
+
+* [FacebookUiLifeCycleModule](https://gist.github.com/funkthemonk/c5ecd059d8d1704f3c2d#file-facebookuilifecyclehelper) - requires [FacebookSDK](https://github.com/facebook/facebook-android-sdk)
+   
 Expanding
 ----
 You can extend on top of ModularComponents to expand the events that it can handle.
