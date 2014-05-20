@@ -31,17 +31,17 @@ Again, you might be tempted to make a BaseDrawerToggleActivity, but you can't ex
 
 Instead, extend from `ModularActivity` or `ModularFragmentActivity`, and register an instance of each of these modules:
 
-    public class FacebookUiLifeCycleModule extends UiLifeCycleHelper implements LifeCycleCallbacks.onCreateCallback, LifeCycleCallbacks.onResumeCallback, 
-             LifeCycleCallbacks.onActivityResultCallback, InstanceStateCallbacks.onSaveInstanceStateCallback, 
-             LifeCycleCallbacks.onPauseCallback, LifeCycleCallbacks.onStopCallback, LifeCycleCallbacks.onDestroyCallback {
-
-        FacebookUiLifeCycleModule(Activity activity, Session.StatusCallback callback) {
+    public class FacebookUiLifecycleModule extends UiLifecycleHelper implements LifeCycleCallbacks.onCreateCallback, LifeCycleCallbacks.onResumeCallback,
+        LifeCycleCallbacks.onActivityResultCallback, InstanceStateCallbacks.onSaveInstanceStateCallback,
+        LifeCycleCallbacks.onPauseCallback, LifeCycleCallbacks.onStopCallback, LifeCycleCallbacks.onDestroyCallback {
+    
+        FacebookUiLifecycleModule(Activity activity, Session.StatusCallback callback) {
             super(activity, callback);
         }
-
+    
         //// The callback methods have the same signature as what UiLifeCycleHelper already declares, so we don't need to redefine them
     }
-
+    
 and
 
     public class DrawerToggleModule extends ActionBarDrawerToggle implements LifeCycleCallbacks.onPostCreateCallback, LifeCycleCallbacks.onConfigurationChangedCallback, MenuCallbacks.onOptionsItemSelectedCallback {
@@ -173,9 +173,9 @@ We provide a new constructor in DrawerToggleModule:
             super(activity, drawer, icon, open, close);
             controller.addCallbackListener(this);
     
-            // Create the DrawerListenerModule, it will now handle the onDrawerListener events and broadcast them through the ModularComponent as custom callbacks
+            // Create the DrawerListenerModule, it will now handle the DrawerListener events and broadcast them through the ModularComponent as custom callbacks
             DrawerListenerModule listenerModule = new DrawerListenerModule(controller, drawer);
-            // The registerListener helper method can be used to subscribe an instance of the normal onDrawerListener interface
+            // The registerListener helper method can be used to subscribe an instance of the normal DrawerListener interface
             listenerModule.registerListener(this); // Could also be done statically when we know the ModuleController: DrawerListenerModule.registerListener(controller, drawerModule);
     
         }
